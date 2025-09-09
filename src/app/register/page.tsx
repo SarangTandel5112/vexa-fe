@@ -11,6 +11,7 @@ import {
   Button,
   SocialButton
 } from "@/components";
+import Link from "next/link";
 
 export default function RegisterPage() {
   return (
@@ -66,7 +67,7 @@ export default function RegisterPage() {
                   account
                 </h2>
                 <p className="font-sf-pro text-base font-normal text-[#776F69]">
-                  Already have an account? <span className="text-[#612A74] font-semibold cursor-pointer hover:underline">Sign In</span>
+                  Already have an account? <Link href="/login" className="text-[#612A74] font-semibold cursor-pointer hover:underline">Sign In</Link>
                 </p>
               </div>
 
