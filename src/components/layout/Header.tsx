@@ -1,8 +1,7 @@
 import React from "react";
-import { HeaderProps } from "@/components/types";
-import { Logo } from "@/components/icons/Logo";
-import { Button } from "@/components/ui/Button";
-import { Container } from "./Layout";
+import { HeaderProps } from '@/components/types'
+import { Logo } from '@/components/icons/Logo'
+import { Button } from '@/components/ui/Button'
 import Link from "next/link";
 
 const ContactIcon = () => (
@@ -86,8 +85,8 @@ export function Header({
 
   if (variant === "dashboard") {
     return (
-      <header className={`w-full px-4 border-b border-[#D0CAC5] ${className}`}>
-        <div className="py-9 flex justify-between items-center max-w-[1200px] mx-auto">
+      <header className={`w-full px-4 py-6 md:px-8 border-b border-[#D0CAC5] ${className}`}>
+        <div className=" flex justify-between items-center max-w-[1200px] mx-auto">
           {renderButtons()}
         </div>
       </header>
@@ -96,7 +95,7 @@ export function Header({
 
   return (
     <header
-      className={`w-full px-4 py-9 border-b border-[#D0CAC5] ${className}`}
+      className={`w-full px-4 py-6 border-b border-[#D0CAC5] ${className}`}
     >
       <div className="flex justify-between items-center max-w-[1200px] mx-auto">
         <Logo size="md" />

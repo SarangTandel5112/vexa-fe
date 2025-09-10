@@ -1,19 +1,15 @@
 'use client'
 
 import {
-  PageWrapper,
   MainContent,
   Container,
   CenteredContent,
-  Header,
   DashboardCard
 } from "@/components";
 
 export default function Home() {
   return (
-    <PageWrapper>
-      <Header variant="dashboard" showNewTopic={true} />
-
+    <>
       <section className="px-4 md:px-8 lg:px-[120px]">
         <CenteredContent className="py-8 md:py-10">
           <h2 className="font-bricolage text-[28px] md:text-[40px] font-bold leading-[1] text-[#401A4D]">
@@ -53,6 +49,6 @@ export default function Home() {
           ))}
         </Container>
       </MainContent>
-    </PageWrapper>
+    </>
   );
 }

@@ -10,7 +10,7 @@ export function FeatureCard({
 }: FeatureCardProps) {
   return (
     <div
-      className={`p-6 rounded-[36px] border border-[#D0CAC5] backdrop-blur-[15px] bg-white/40 space-y-5 ${className}`}
+      className={`p-6 rounded-[36px] border border-[#D0CAC5] backdrop-blur-[15px]  space-y-5 ${className}`}
     >
       <div className="flex justify-center">
         <div className="w-[60px] h-[58px] rounded-full border border-[#776F69]/28 bg-[#683075] flex items-center justify-center">

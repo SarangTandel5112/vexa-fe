@@ -1,11 +1,18 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { StepperProps } from '@/components/types'
+import React from "react";
+import { StepperProps } from "@/components/types";
 
-export function Stepper({ steps, currentStep, onStepChange, className = '' }: StepperProps) {
+export function Stepper({
+  steps,
+  currentStep,
+  onStepChange,
+  className = "",
+}: StepperProps) {
   return (
-    <div className={`max-w-[800px] mx-auto rounded-[36px] border border-[#D0CAC5] p-6 md:p-8 bg-white/50 ${className}`}>
+    <div
+      className={`max-w-[800px] mx-auto rounded-[36px] border border-[#D0CAC5] p-6 md:p-8 bg-white/50 ${className}`}
+    >
       {/* Stepper */}
       <div className="flex items-center gap-4 md:gap-6 justify-center">
         {steps.map((step, i) => (
@@ -13,20 +20,21 @@ export function Stepper({ steps, currentStep, onStepChange, className = '' }: St
             <button
               className={
                 (i === currentStep
-                  ? 'bg-[#612A74] text-white'
-                  : 'bg-[#E4DED9] text-white') +
-                ' rounded-full px-4 md:px-6 py-1.5 font-bricolage text-[20px] md:text-[32px] font-bold leading-[40px]'
+                  ? "bg-[#612A74] text-white"
+                  : "bg-[#E4DED9] text-white") +
+                " rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center font-bricolage text-[20px] md:text-[32px] font-bold"
               }
               onClick={() => onStepChange(i)}
               aria-current={i === currentStep}
             >
               {step.id}
             </button>
+
             {i < steps.length - 1 && (
               <div
                 className={
-                  'h-2 rounded-[50px] w-[90px] md:w-[126px] ' +
-                  (i < currentStep ? 'bg-[#612A74]' : 'bg-[#E4DED9]')
+                  "h-2 rounded-[50px] w-[90px] md:w-[126px] " +
+                  (i < currentStep ? "bg-[#612A74]" : "bg-[#E4DED9]")
                 }
               />
             )}
@@ -44,5 +52,5 @@ export function Stepper({ steps, currentStep, onStepChange, className = '' }: St
         </p>
       </div>
     </div>
-  )
+  );
 }

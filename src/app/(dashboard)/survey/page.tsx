@@ -1,15 +1,13 @@
-"use client";
+'use client'
 
-import { useState } from "react";
+import { useState } from 'react'
 import {
-  PageWrapper,
   CenteredContent,
-  Header,
   Stepper,
   Button,
-  Step,
-} from "@/components";
-import Link from "next/link";
+  Step
+} from "@/components"
+import Link from "next/link"
 
 const steps: Step[] = [
   {
@@ -30,15 +28,13 @@ const steps: Step[] = [
     description:
       "Preview a clean summary of findings and next steps. Tweak inputs and re-run if needed before you begin the full session.",
   },
-];
+]
 
 export default function SurveyPage() {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(0)
 
   return (
-    <PageWrapper>
-      <Header variant="dashboard" showNewTopic={true} />
-
+    <>
       <section className="px-4 md:px-8 lg:px-[120px]">
         <CenteredContent className="py-10">
           <h1 className="font-bricolage text-[28px] md:text-[40px] font-bold text-[#401A4D] leading-[1]">
@@ -101,13 +97,13 @@ export default function SurveyPage() {
             <Button
               variant="gradient"
               size="lg"
-              className="w-full md:w-auto text-[22px] md:text-[33px] px-10 py-5"
+              className="w-full md:w-auto text-[22px] md:text-[33px] px-28 py-3 rounded-full"
             >
               Start Survey
             </Button>
           </Link>
         </CenteredContent>
       </section>
-    </PageWrapper>
-  );
+    </>
+  )
 }

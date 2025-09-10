@@ -36,7 +36,7 @@ export function MainContent({
   className?: string;
 }) {
   return (
-    <main className={`max-w-[1200px] mx-auto px-4 `}>
+    <main className={`max-w-[1200px] mx-auto px-4 md:px-8`}>
       <div className={`py-8 lg:py-12 ${className}`}>{children}</div>
     </main>
   );
