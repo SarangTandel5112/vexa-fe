@@ -3,7 +3,7 @@ import { Button, CenteredContent, ConversationControls } from "@/components";
 import { EndConversationModal } from "@/components/ui/EndConversationModal";
 import { ThankYouModal } from "@/components/ui/ThankYouModal";
 import { useConversation } from "@elevenlabs/react";
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 interface PageProps {
   params: {
@@ -18,6 +18,8 @@ export default function SurveyDemoPage({ params }: PageProps) {
   const [isPaused, setIsPaused] = useState(false);
   const [micMuted, setMicMuted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(60 * 60); // 60 minutes in seconds
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const conversation = useConversation({
     overrides: {
@@ -31,6 +33,63 @@ export default function SurveyDemoPage({ params }: PageProps) {
     onMessage: (message) => console.log("Message:", message),
     onError: (error) => console.error("Error:", error),
   });
+
+  const endConversation = useCallback(async () => {
+    // Clear the timer
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    
+    await conversation.endSession();
+    setIsConversationActive(false);
+    setShowEndModal(false);
+    setIsPaused(false);
+    setMicMuted(false);
+    setTimeRemaining(60 * 60); // Reset timer for next session
+    setShowThankYouModal(true);
+  }, [conversation]);
+
+  // Timer useEffect
+  useEffect(() => {
+    if (isConversationActive && !isPaused && timeRemaining > 0) {
+      timerRef.current = setInterval(() => {
+        setTimeRemaining((prev) => {
+          if (prev <= 1) {
+            // Time's up - set flag to end conversation
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [isConversationActive, isPaused, timeRemaining]);
+
+  // Separate useEffect to handle timer expiry
+  useEffect(() => {
+    if (isConversationActive && timeRemaining === 0) {
+      endConversation();
+    }
+  }, [isConversationActive, timeRemaining, endConversation]);
+
+  // Format time as MM:SS
+  const formatTime = (seconds: number): string => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
 
   const startConversation = async () => {
     try {
@@ -46,15 +105,6 @@ export default function SurveyDemoPage({ params }: PageProps) {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const endConversation = async () => {
-    await conversation.endSession();
-    setIsConversationActive(false);
-    setShowEndModal(false);
-    setIsPaused(false);
-    setMicMuted(false);
-    setShowThankYouModal(true);
   };
 
   const closeThankYouModal = () => {
@@ -142,13 +192,30 @@ export default function SurveyDemoPage({ params }: PageProps) {
             </Button>
           </>
         ) : (
-          <ConversationControls
-            onPause={handlePause}
-            onMute={handleMute}
-            onEndConversation={() => setShowEndModal(true)}
-            isPaused={isPaused}
-            isMuted={micMuted}
-          />
+          <div className="flex flex-col items-center gap-4">
+            {/* Timer Display */}
+            <div className="bg-white/70 backdrop-blur-[15px] border border-[#776F69]/28 rounded-2xl px-6 py-3">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 bg-[#DE737A] rounded-full animate-pulse"></div>
+                <span className="font-sf-pro text-lg font-semibold text-[#401A4D]">
+                  Time Remaining: {formatTime(timeRemaining)}
+                </span>
+              </div>
+              {timeRemaining <= 300 && ( // Show warning when 5 minutes or less
+                <p className="text-xs text-[#DE737A] mt-1 text-center">
+                  Survey will end automatically when time expires
+                </p>
+              )}
+            </div>
+            
+            <ConversationControls
+              onPause={handlePause}
+              onMute={handleMute}
+              onEndConversation={() => setShowEndModal(true)}
+              isPaused={isPaused}
+              isMuted={micMuted}
+            />
+          </div>
         )}
       </div>
 
