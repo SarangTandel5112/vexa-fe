@@ -10,6 +10,7 @@ export function InputField({
   onChange, 
   icon, 
   showPasswordToggle = false, 
+  disabled = false,
   className = '' 
 }: InputFieldProps) {
   const [showPassword, setShowPassword] = useState(false)
@@ -31,16 +32,19 @@ export function InputField({
 
   return (
     <div className={`relative ${className}`}>
-      <div className="flex items-center gap-2 px-4 py-4 border border-[#776F69]/28 rounded-2xl bg-white/20">
+      <div className={`flex items-center gap-2 px-4 py-4 border border-[#776F69]/28 rounded-2xl bg-white/20 ${
+        disabled ? 'opacity-60 cursor-not-allowed' : ''
+      }`}>
         {icon && icon}
         <input 
           type={inputType}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className="flex-1 bg-transparent outline-none font-sf-pro text-base text-[#0A0A0A] placeholder:text-[#776F69]"
+          disabled={disabled}
+          className="flex-1 bg-transparent outline-none font-sf-pro text-base text-[#0A0A0A] placeholder:text-[#776F69] disabled:cursor-not-allowed"
         />
-        {type === 'password' && showPasswordToggle && <PasswordToggleIcon />}
+        {type === 'password' && showPasswordToggle && !disabled && <PasswordToggleIcon />}
       </div>
     </div>
   )

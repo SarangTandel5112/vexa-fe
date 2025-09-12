@@ -5,6 +5,10 @@ export * from './types'
 export { Button, SocialButton } from './ui/Button'
 export { FeatureCard, DashboardCard, FeatureIcons } from './ui/Cards'
 export { Stepper } from './ui/Stepper'
+export { ConversationControls } from './ui/ConversationControls'
+export { Modal } from './ui/Modal'
+export { EndConversationModal } from './ui/EndConversationModal'
+export { ThankYouModal } from './ui/ThankYouModal'
 
 // Form Components
 export { InputField, TextareaField, SelectField, FormIcons } from './forms/FormFields'
@@ -15,3 +19,6 @@ export { Header } from './layout/Header'
 
 // Icons
 export { Logo } from './icons/Logo'
+
+// Auth Components
+export { ProtectedRoute } from './auth/ProtectedRoute'

@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 import { HeaderProps } from '@/components/types'
 import { Logo } from '@/components/icons/Logo'

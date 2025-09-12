@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react';
 import {
   MainContent,
   InputField,
@@ -8,14 +9,76 @@ import {
   FormIcons,
   Button
 } from "@/components";
+import { contactService } from '@/services/contact.service';
+import { ContactRequest } from '@/components/types';
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState<ContactRequest>({
+    companyName: '',
+    email: '',
+    purpose: '',
+    description: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [successMessage, setSuccessMessage] = useState<string>('');
+
   const purposeOptions = [
-    { value: "general", label: "General Inquiry" },
-    { value: "support", label: "Technical Support" },
-    { value: "sales", label: "Sales Question" },
-    { value: "partnership", label: "Partnership" }
+    { value: "Demo", label: "Demo" },
+    { value: "Support", label: "Technical Support" },
+    { value: "Sales", label: "Sales Question" },
+    { value: "Partnership", label: "Partnership" },
+    { value: "General", label: "General Inquiry" }
   ]
+
+  const handleInputChange = (field: keyof ContactRequest, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear errors when user starts typing
+    if (errors.length > 0) {
+      setErrors([]);
+    }
+    if (successMessage) {
+      setSuccessMessage('');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Reset previous states
+    setErrors([]);
+    setSuccessMessage('');
+    
+    // Validate form data
+    const validation = contactService.validateContactData(formData);
+    if (!validation.isValid) {
+      setErrors(validation.errors);
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      const response = await contactService.submitContact(formData);
+      
+      if (response.error) {
+        setErrors([response.error]);
+      } else {
+        setSuccessMessage('Thank you for your message! We will get back to you soon.');
+        // Reset form
+        setFormData({
+          companyName: '',
+          email: '',
+          purpose: '',
+          description: ''
+        });
+      }
+    } catch (error) {
+      setErrors(['An unexpected error occurred. Please try again.']);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <MainContent>
@@ -30,37 +93,67 @@ export default function ContactPage() {
               </h1>
             </div>
 
+            {/* Success Message */}
+            {successMessage && (
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <p className="text-green-800 text-sm">{successMessage}</p>
+              </div>
+            )}
+
+            {/* Error Messages */}
+            {errors.length > 0 && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <ul className="text-red-800 text-sm space-y-1">
+                  {errors.map((error, index) => (
+                    <li key={index}>• {error}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Contact Form */}
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <InputField 
                 type="text" 
                 placeholder="Enter your Company Name" 
+                value={formData.companyName}
+                onChange={(e) => handleInputChange('companyName', e.target.value)}
                 icon={<FormIcons.User />} 
+                disabled={isSubmitting}
               />
 
               <InputField 
                 type="email" 
                 placeholder="Enter your Email" 
+                value={formData.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
                 icon={<FormIcons.Email />} 
+                disabled={isSubmitting}
               />
 
               <SelectField 
                 placeholder="Select Purpose"
+                value={formData.purpose}
+                onChange={(e) => handleInputChange('purpose', e.target.value)}
                 options={purposeOptions}
                 icon={<FormIcons.Document />} 
               />
 
               <TextareaField 
                 placeholder="Add description"
+                value={formData.description}
+                onChange={(e) => handleInputChange('description', e.target.value)}
                 rows={6}
               />
 
               <Button 
                 type="submit"
                 variant="primary"
+                loading={isSubmitting}
+                disabled={isSubmitting}
                 className="w-full py-[18px]"
               >
-                Submit
+                {isSubmitting ? 'Submitting...' : 'Submit'}
               </Button>
             </form>
           </div>

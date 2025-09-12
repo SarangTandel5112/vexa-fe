@@ -6,6 +6,7 @@ import {
   CenteredContent,
   DashboardCard
 } from "@/components";
+import { botData } from "@/utils/data";
 
 export default function Home() {
   return (
@@ -23,25 +24,10 @@ export default function Home() {
 
       <MainContent className="pb-16">
         <Container className="grid gap-6 md:gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {[
-            {
-              title: "AI Customer Support",
-              desc:
-                "Dorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra.",
-            },
-            {
-              title: "AI Research agent",
-              desc:
-                "Dorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra.",
-            },
-            {
-              title: "Build your custom agent",
-              desc:
-                "Dorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra.",
-            },
-          ].map((c, i) => (
+          {botData.map((c, i) => (
             <DashboardCard 
               key={i}
+              id={c.id}
               title={c.title}
               description={c.desc}
               onStartConversation={() => console.log(`Starting conversation with ${c.title}`)}

@@ -6,6 +6,7 @@ export interface ButtonProps {
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
+  loading?: boolean;
   className?: string;
   href?: string;
 }
@@ -17,6 +18,7 @@ export interface InputFieldProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   icon?: React.ReactNode;
   showPasswordToggle?: boolean;
+  disabled?: boolean;
   className?: string;
 }
 
@@ -58,6 +60,7 @@ export interface FeatureCardProps {
 }
 
 export interface DashboardCardProps {
+  id:string,
   title: string;
   description: string;
   avatar?: string;
@@ -94,4 +97,49 @@ export interface SocialLoginProps {
   provider: 'google' | 'facebook';
   onClick?: () => void;
   className?: string;
+}
+
+// Authentication Types
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  message?: string;
+  user?: User;
+  success?: boolean;
+}
+
+export interface SessionResponse {
+  loggedIn: boolean;
+  username?: string;
+}
+
+export interface User {
+  id?: string;
+  username: string;
+  email?: string;
+  name?: string;
+}
+
+export interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean; // For initial auth check on app load
+  isLoggingIn: boolean; // For login button action
+  error: string | null;
+}
+
+// Contact Form Types
+export interface ContactRequest {
+  companyName: string;
+  email: string;
+  purpose: string;
+  description: string;
+}
+
+export interface ContactResponse {
+  message?: string;
+  success?: boolean;
 }

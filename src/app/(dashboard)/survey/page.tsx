@@ -1,13 +1,9 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import {
-  CenteredContent,
-  Stepper,
-  Button,
-  Step
-} from "@/components"
-import Link from "next/link"
+import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { CenteredContent, Stepper, Button, Step } from "@/components";
+import Link from "next/link";
 
 const steps: Step[] = [
   {
@@ -18,20 +14,44 @@ const steps: Step[] = [
   },
   {
     id: 2,
-    label: "Knowledge Upload",
+    label: "Approx. 1 hr",
     description:
       "Add documents, links, and notes. The agent securely indexes them to ground answers with your domain knowledge.",
   },
   {
     id: 3,
-    label: "Report Review",
+    label: "100% Confidential",
     description:
       "Preview a clean summary of findings and next steps. Tweak inputs and re-run if needed before you begin the full session.",
   },
-]
+];
 
 export default function SurveyPage() {
-  const [active, setActive] = useState(0)
+  const [active, setActive] = useState(0);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const surveyId = searchParams.get("id");
+
+  const handleNext = () => {
+    if (active < steps.length - 1) {
+      setActive(active + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (active > 0) {
+      setActive(active - 1);
+    }
+  };
+
+  const handleStart = () => {
+    if (surveyId) {
+      router.push(`/survey/${surveyId}`);
+    } else {
+      // Fallback if no ID is provided
+      router.push("/survey/demo");
+    }
+  };
 
   return (
     <>
@@ -58,52 +78,113 @@ export default function SurveyPage() {
           <p className="font-sf-pro text-[16px] md:text-[20px] text-[#776F69] leading-8 mt-2">
             Not sure what to expect? Try a short 5-min demo before we begin.
           </p>
-          <Button
-            variant="secondary"
-            className="mt-4"
-            icon={
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18 8.5L22 12.5L18 16.5"
-                  stroke="#612A74"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2 12.5H22"
-                  stroke="#612A74"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            }
-          >
-            Get a demo
-          </Button>
+          <Link href="/survey/c094c31b-bb40-459a-a7fb-c5b246e63f32">
+            <Button
+              variant="secondary"
+              className="mt-4"
+              icon={
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M18 8.5L22 12.5L18 16.5"
+                    stroke="#612A74"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M2 12.5H22"
+                    stroke="#612A74"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              }
+            >
+              Get a demo
+            </Button>
+          </Link>
         </CenteredContent>
       </section>
 
       <section className="px-4 md:px-8 lg:px-[120px] pb-16">
         <CenteredContent>
-          <Link href="/survey/demo">
-            <Button
-              variant="gradient"
-              size="lg"
-              className="w-full md:w-auto text-[22px] md:text-[33px] px-28 py-3 rounded-full"
-            >
-              Start Survey
-            </Button>
-          </Link>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+            {/* Previous Button - only show if not on first step */}
+            {active > 0 && (
+              <Button
+                variant="secondary"
+                onClick={handlePrevious}
+                className="w-full md:w-auto px-8 py-3"
+                icon={
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 18L9 12L15 6"
+                      stroke="#612A74"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
+              >
+                Previous
+              </Button>
+            )}
+
+            {/* Next Button - show on first two steps */}
+            {active < steps.length - 1 ? (
+              <Button
+                variant="gradient"
+                size="sm"
+                onClick={handleNext}
+                className="w-full md:w-auto text-[18px] md:text-[24px] px-12 py-3 rounded-full"
+                icon={
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 18L15 12L9 6"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
+              >
+                Next
+              </Button>
+            ) : (
+              /* Start Button - show on last step */
+              <Button
+                variant="gradient"
+                size="sm"
+                onClick={handleStart}
+                className="w-full md:w-auto text-[18px] md:text-[24px] px-12 py-3 rounded-full"
+              >
+                Start Survey
+              </Button>
+            )}
+          </div>
         </CenteredContent>
       </section>
     </>
-  )
+  );
 }

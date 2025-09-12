@@ -10,6 +10,7 @@ export function Button({
   onClick,
   type = 'button',
   disabled = false,
+  loading = false,
   className = '',
   href
 }: ButtonProps) {
@@ -34,13 +35,38 @@ export function Button({
     ? 'rounded-[36px_36px_8px_36px]' 
     : 'rounded-[36px]'
 
+  const isDisabled = disabled || loading
   const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${roundedClasses} ${className} ${
-    disabled ? 'opacity-50 cursor-not-allowed' : ''
+    isDisabled ? 'opacity-50 cursor-not-allowed' : ''
   }`
+
+  // Loading spinner component
+  const LoadingSpinner = () => (
+    <svg
+      className="animate-spin h-4 w-4"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      ></path>
+    </svg>
+  )
 
   const content = (
     <>
-      {icon && icon}
+      {loading ? <LoadingSpinner /> : (icon && icon)}
       {children}
     </>
   )
@@ -57,7 +83,7 @@ export function Button({
     <button
       type={type}
       onClick={onClick}
-      disabled={disabled}
+      disabled={isDisabled}
       className={classes}
     >
       {content}

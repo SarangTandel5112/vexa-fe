@@ -1,12 +1,74 @@
-import { Button, CenteredContent } from "@/components"
+"use client";
+import { Button, CenteredContent, ConversationControls } from "@/components";
+import { EndConversationModal } from "@/components/ui/EndConversationModal";
+import { ThankYouModal } from "@/components/ui/ThankYouModal";
+import { useConversation } from "@elevenlabs/react";
+import { useState } from "react";
 
 interface PageProps {
   params: {
-    id: string
-  }
+    id: string;
+  };
 }
 
 export default function SurveyDemoPage({ params }: PageProps) {
+  const [isConversationActive, setIsConversationActive] = useState(false);
+  const [showEndModal, setShowEndModal] = useState(false);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [micMuted, setMicMuted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const conversation = useConversation({
+    overrides: {
+      agent: {
+        language: "en",
+      },
+    },
+    micMuted,
+    onConnect: () => console.log("Connected"),
+    onDisconnect: () => console.log("Disconnected"),
+    onMessage: (message) => console.log("Message:", message),
+    onError: (error) => console.error("Error:", error),
+  });
+
+  const startConversation = async () => {
+    try {
+      setIsLoading(true);
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      await conversation.startSession({
+        agentId: "XabqnwlhQf0xe3M4Ew7p",
+        connectionType: "websocket",
+      });
+      setIsConversationActive(true);
+    } catch (error) {
+      console.error("Failed to start conversation:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const endConversation = async () => {
+    await conversation.endSession();
+    setIsConversationActive(false);
+    setShowEndModal(false);
+    setIsPaused(false);
+    setMicMuted(false);
+    setShowThankYouModal(true);
+  };
+
+  const closeThankYouModal = () => {
+    setShowThankYouModal(false);
+  };
+
+  const handlePause = () => {
+    setIsPaused(!isPaused);
+  };
+
+  const handleMute = () => {
+    setMicMuted(!micMuted);
+  };
+
   return (
     <main className="flex-1 flex flex-col justify-center items-center px-4 py-12">
       <CenteredContent className="mb-12">
@@ -14,7 +76,9 @@ export default function SurveyDemoPage({ params }: PageProps) {
           Want to give Vexa a Quick try?
         </h1>
         <p className="font-sf-pro text-[16px] md:text-[20px] text-[#401A4D] leading-[1.6] md:leading-[2]">
-          Think of it as a practice round — just 5 minutes, totally optional. Get a feel for how the chat works before we dive into the real session.
+          Think of it as a practice round — just 5 minutes, totally optional.
+          Get a feel for how the chat works before we dive into the real
+          session.
         </p>
       </CenteredContent>
 
@@ -26,7 +90,7 @@ export default function SurveyDemoPage({ params }: PageProps) {
           {/* Image */}
           <div className="relative w-full h-full rounded-full overflow-hidden">
             <img
-              src="https://api.builder.io/api/v1/image/assets/TEMP/ff42fbf69ae4bc5fec82ba05f4315efddb09043e?width=1088"
+              src="/survey.png"
               alt="Pink swirl decoration"
               className="w-full h-full object-cover scale-150"
             />
@@ -36,34 +100,74 @@ export default function SurveyDemoPage({ params }: PageProps) {
 
       {/* Action Buttons */}
       <div className="flex flex-col items-center gap-4 mb-12">
-        <Button 
-          variant="secondary" 
-          icon={
-            <svg width="24" height="24" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M18.5 8.5L22.5 12.5L18.5 16.5" stroke="#612A74" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M2.5 12.5H22.5" stroke="#612A74" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          }
-        >
-          Skip
-        </Button>
-
-        <Button variant="gradient" size="lg">
-          Start Demo
-        </Button>
+        {!isConversationActive ? (
+          <>
+            <Button
+              variant="secondary"
+              icon={
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M18.5 8.5L22.5 12.5L18.5 16.5"
+                    stroke="#612A74"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M2.5 12.5H22.5"
+                    stroke="#612A74"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              }
+            >
+              Skip
+            </Button>
+            <Button
+              variant="gradient"
+              size="sm"
+              className="px-16 py-3"
+              onClick={startConversation}
+              loading={isLoading}
+            >
+              {isLoading ? "Starting..." : "Start Demo"}
+            </Button>
+          </>
+        ) : (
+          <ConversationControls
+            onPause={handlePause}
+            onMute={handleMute}
+            onEndConversation={() => setShowEndModal(true)}
+            isPaused={isPaused}
+            isMuted={micMuted}
+          />
+        )}
       </div>
 
       <CenteredContent>
         <p className="font-sf-pro text-[14px] md:text-[16px] text-[#827487] underline">
-          For any help during the conversation you can pause and{' '}
-          <span className="cursor-pointer hover:text-[#612A74] transition-colors">contact us</span>
+          For any help during the conversation you can pause and{" "}
+          <span className="cursor-pointer hover:text-[#612A74] transition-colors">
+            contact us
+          </span>
         </p>
-        
-        {/* Debug info - remove in production */}
-        <div className="mt-8 text-sm text-gray-500">
-          Survey ID: {params.id}
-        </div>
       </CenteredContent>
+
+      <EndConversationModal
+        isOpen={showEndModal}
+        onClose={() => setShowEndModal(false)}
+        onConfirm={endConversation}
+      />
+
+      <ThankYouModal isOpen={showThankYouModal} onClose={closeThankYouModal} />
     </main>
-  )
+  );
 }
