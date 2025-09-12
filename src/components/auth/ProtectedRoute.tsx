@@ -7,7 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requireAuth?: boolean; // Default: true
-  redirectTo?: string; // Default: '/login' for auth required, '/' for auth not required
+  redirectTo?: string; // Default: '/login' for auth required, '/survey' for auth not required
 }
 
 export function ProtectedRoute({ 
@@ -28,7 +28,7 @@ export function ProtectedRoute({
       router.push(redirectTo || '/login');
     } else if (!requireAuth && isAuthenticated) {
       // User shouldn't be authenticated but is (e.g., login page when already logged in)
-      router.push(redirectTo || '/');
+      router.push(redirectTo || '/survey');
     }
   }, [isAuthenticated, isLoading, requireAuth, redirectTo, router]);
 

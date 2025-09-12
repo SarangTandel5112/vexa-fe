@@ -46,19 +46,17 @@ export function Header({
 
       case "dashboard":
         return (
-          <div className="grid grid-cols-3 items-center w-full">
-            {/* Left: New Topic */}
-            <div className="flex">
-              {showNewTopic && <Button variant="primary">New Topic</Button>}
-            </div>
+          <div className="flex justify-between items-center w-full">
+            {/* Left: Empty space to maintain center alignment */}
+            <div className="flex-1"></div>
 
             {/* Center: Brand */}
-            <div className="justify-self-center">
+            <div className="">
               <Logo size="md" />
             </div>
 
             {/* Right: Contact us */}
-            <div className="flex justify-end">
+            <div className="flex justify-end flex-1">
               <Link href="/contact">
                 <Button variant="primary" icon={<ContactIcon />}>
                   Contact us
