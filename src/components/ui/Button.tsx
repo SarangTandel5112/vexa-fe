@@ -14,7 +14,7 @@ export function Button({
   className = '',
   href
 }: ButtonProps) {
-  const baseClasses = 'inline-flex items-center justify-center gap-2 font-sf-pro font-bold transition-colors rounded-[36px]'
+  const baseClasses = 'inline-flex items-center justify-center gap-2 font-sf-pro font-bold transition-colors rounded-[36px] cursor-pointer'
 
   const variantClasses = {
     primary: 'text-[#F3EEE9] bg-[#612A74] hover:bg-[#612A74]/90',

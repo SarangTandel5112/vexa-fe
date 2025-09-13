@@ -94,7 +94,7 @@ export function ThankYouModal({ isOpen, onClose }: ThankYouModalProps) {
             {/* Exit Button */}
             <button
               onClick={onClose}
-              className="w-[174px] px-6 py-[18px] flex justify-center items-center rounded-[36px] bg-[#BD3D44] text-[#F3EEE9] font-['SF_Pro_Rounded'] text-[20px] font-bold leading-[20px] transition-all hover:bg-[#a03439]"
+              className="w-[174px] px-6 py-[18px] flex justify-center items-center rounded-[36px] bg-[#BD3D44] text-[#F3EEE9] font-['SF_Pro_Rounded'] text-[20px] font-bold leading-[20px] transition-all hover:bg-[#a03439] cursor-pointer"
             >
               Exit
             </button>

@@ -80,7 +80,7 @@ export default function RegisterPage() {
               />
 
               <div className="text-right">
-                <button type="button" className="font-sf-pro text-sm font-semibold text-[#612A74] hover:underline">
+                <button type="button" className="font-sf-pro text-sm font-semibold text-[#612A74] hover:underline cursor-pointer">
                   Forgot Password?
                 </button>
               </div>
@@ -93,7 +93,7 @@ export default function RegisterPage() {
                 Sign Up
               </Button>
 
-              <p className="text-center font-sf-pro text-sm text-[#776F69] underline">
+              <p className="text-center font-sf-pro text-sm text-[#776F69] underline cursor-pointer">
                 By Signing up you agree to the Terms & Conditions
               </p>
 

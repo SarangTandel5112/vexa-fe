@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CenteredContent, Stepper, Button, Step } from "@/components";
 import Link from "next/link";
+import NextArrow from "@/components/icons/NextArrow";
 
 const steps: Step[] = [
   {
@@ -49,7 +50,7 @@ export default function SurveyPage() {
       router.push(`/survey/${surveyId}`);
     } else {
       // Fallback if no ID is provided
-      router.push("/survey/demo");
+      router.push("/survey/29e2b734-cad3-4a35-94a5-81dcd3c4f364");
     }
   };
 
@@ -78,7 +79,7 @@ export default function SurveyPage() {
           <p className="font-sf-pro text-[16px] md:text-[20px] text-[#776F69] leading-8 mt-2">
             Not sure what to expect? Try a short 5-min demo before we begin.
           </p>
-          <Link href="/survey/c094c31b-bb40-459a-a7fb-c5b246e63f32">
+          <Link href="/survey-demo">
             <Button
               variant="secondary"
               className="mt-4"
@@ -152,21 +153,7 @@ export default function SurveyPage() {
                 onClick={handleNext}
                 className="w-full md:w-auto text-[18px] md:text-[24px] px-12 py-3 rounded-full"
                 icon={
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 18L15 12L9 6"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <NextArrow />
                 }
               >
                 Next

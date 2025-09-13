@@ -34,7 +34,7 @@ export function EndConversationModal({ isOpen, onClose, onConfirm }: EndConversa
             {/* Cancel Button */}
             <button
               onClick={onClose}
-              className="flex-1 flex justify-center items-center px-6 py-[18px] rounded-[36px] bg-[rgba(126,119,112,0.12)] text-[#0A0A0A] font-['SF_Pro_Rounded'] text-[16px] font-bold leading-[20px] transition-all hover:bg-[rgba(126,119,112,0.2)]"
+              className="flex-1 flex justify-center items-center px-6 py-[18px] rounded-[36px] bg-[rgba(126,119,112,0.12)] text-[#0A0A0A] font-['SF_Pro_Rounded'] text-[16px] font-bold leading-[20px] transition-all hover:bg-[rgba(126,119,112,0.2)] cursor-pointer"
             >
               Cancel
             </button>
@@ -42,7 +42,7 @@ export function EndConversationModal({ isOpen, onClose, onConfirm }: EndConversa
             {/* End Now Button */}
             <button
               onClick={onConfirm}
-              className="flex-1 flex justify-center items-center px-6 py-[18px] rounded-[36px] bg-[#BD3D44] text-[#F3EEE9] font-['SF_Pro_Rounded'] text-[16px] font-bold leading-[20px] transition-all hover:bg-[#a03439]"
+              className="flex-1 flex justify-center items-center px-6 py-[18px] rounded-[36px] bg-[#BD3D44] text-[#F3EEE9] font-['SF_Pro_Rounded'] text-[16px] font-bold leading-[20px] transition-all hover:bg-[#a03439] cursor-pointer"
             >
               End Now
             </button>

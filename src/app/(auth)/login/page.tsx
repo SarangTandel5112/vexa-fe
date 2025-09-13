@@ -69,7 +69,7 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <InputField
                 type="text" 
-                placeholder="Username or Email" 
+                placeholder="User Id" 
                 value={formData.username}
                 onChange={handleInputChange('username')}
                 icon={<FormIcons.Email />} 
@@ -87,7 +87,7 @@ export default function LoginPage() {
               />
 
               <div className="text-right">
-                <a href="#" className="font-sf-pro text-sm font-semibold text-[#612A74] hover:underline">Forgot Password?</a>
+                <a href="#" className="font-sf-pro text-sm font-semibold text-[#612A74] hover:underline cursor-pointer">Forgot Password?</a>
               </div>
 
               <Button 
@@ -101,7 +101,7 @@ export default function LoginPage() {
               </Button>
 
               <p className="font-sf-pro text-xs text-[#776F69] text-center">
-                By Signing up you agree to the <a href="#" className="underline">Terms & Conditions</a>
+                By Signing up you agree to the <a href="#" className="underline cursor-pointer">Terms & Conditions</a>
               </p>
             </form>
           </div>

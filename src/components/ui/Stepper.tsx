@@ -22,7 +22,7 @@ export function Stepper({
                 (i === currentStep
                   ? "bg-[#612A74] text-white"
                   : "bg-[#E4DED9] text-white") +
-                " rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center font-bricolage text-[20px] md:text-[32px] font-bold"
+                " rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center font-bricolage text-[20px] md:text-[32px] font-bold cursor-pointer"
               }
               onClick={() => onStepChange(i)}
               aria-current={i === currentStep}

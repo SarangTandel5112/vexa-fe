@@ -98,7 +98,7 @@ export default function UserPage() {
               </div>
               
               {/* Export Button */}
-              <button className="flex items-center gap-2 px-4 py-2 bg-white border border-[#E7E7E7] rounded-xl text-sm text-[#444] font-sf-pro hover:bg-gray-50 transition-colors">
+              <button className="flex items-center gap-2 px-4 py-2 bg-white border border-[#E7E7E7] rounded-xl text-sm text-[#444] font-sf-pro hover:bg-gray-50 transition-colors cursor-pointer">
                 <span>Export</span>
                 <ExportIcon />
               </button>
@@ -130,7 +130,7 @@ export default function UserPage() {
                   <div className="text-base text-[#8D8D8D] font-sf-pro">{user.projects}</div>
                   <div className="text-base text-[#8D8D8D] font-sf-pro">{user.agentUsed}</div>
                   <div>
-                    <button className="flex items-center gap-2 px-3 py-1 bg-white border border-[#612A74] rounded-xl text-xs text-[#612A74] font-sf-pro hover:bg-gray-50 transition-colors">
+                    <button className="flex items-center gap-2 px-3 py-1 bg-white border border-[#612A74] rounded-xl text-xs text-[#612A74] font-sf-pro hover:bg-gray-50 transition-colors cursor-pointer">
                       <span>{user.plan}</span>
                       <ChevronDownIcon />
                     </button>
@@ -144,26 +144,26 @@ export default function UserPage() {
           <div className="flex flex-col items-center gap-4 mt-8">
             <div className="flex items-center gap-4">
               {/* Previous Button */}
-              <button className="flex items-center gap-2 text-[#8D8D8D] font-sf-pro hover:text-[#444] transition-colors">
+              <button className="flex items-center gap-2 text-[#8D8D8D] font-sf-pro hover:text-[#444] transition-colors cursor-pointer">
                 <ChevronLeftIcon />
                 <span>Previous</span>
               </button>
 
               {/* Page Numbers */}
               <div className="flex items-center gap-2">
-                <button className="px-3 py-1 bg-[#612A74] text-white rounded-sm text-sm font-sf-pro">
+                <button className="px-3 py-1 bg-[#612A74] text-white rounded-sm text-sm font-sf-pro cursor-pointer">
                   1
                 </button>
-                <button className="px-3 py-1 bg-[#E5E0DA] text-[#979797] rounded-sm text-sm font-sf-pro hover:bg-[#D0CAC5] transition-colors">
+                <button className="px-3 py-1 bg-[#E5E0DA] text-[#979797] rounded-sm text-sm font-sf-pro hover:bg-[#D0CAC5] transition-colors cursor-pointer">
                   2
                 </button>
-                <button className="px-3 py-1 bg-[#E5E0DA] text-[#979797] rounded-sm text-sm font-sf-pro hover:bg-[#D0CAC5] transition-colors">
+                <button className="px-3 py-1 bg-[#E5E0DA] text-[#979797] rounded-sm text-sm font-sf-pro hover:bg-[#D0CAC5] transition-colors cursor-pointer">
                   3
                 </button>
               </div>
 
               {/* Next Button */}
-              <button className="flex items-center gap-2 text-[#444] font-sf-pro hover:text-[#612A74] transition-colors">
+              <button className="flex items-center gap-2 text-[#444] font-sf-pro hover:text-[#612A74] transition-colors cursor-pointer">
                 <span>Next</span>
                 <ChevronRightIcon />
               </button>

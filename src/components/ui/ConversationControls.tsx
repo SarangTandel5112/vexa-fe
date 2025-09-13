@@ -22,7 +22,7 @@ export function ConversationControls({
         {/* Pause/Resume Button */}
         <button
           onClick={onPause}
-          className="flex-1 max-w-40 flex items-center justify-center gap-1 px-6 py-2 bg-gradient-to-r from-[#E8A089] to-[#612A74] rounded-full text-white font-sf-pro text-sm font-normal capitalize transition-all hover:shadow-lg"
+          className="flex-1 max-w-40 flex items-center justify-center gap-1 px-6 py-2 bg-gradient-to-r from-[#E8A089] to-[#612A74] rounded-full text-white font-sf-pro text-sm font-normal capitalize transition-all hover:shadow-lg cursor-pointer"
         >
           {isPaused ? (
             // Resume/Play Icon
@@ -61,7 +61,7 @@ export function ConversationControls({
         {/* Mute/Unmute Button */}
         <button
           onClick={onMute}
-          className="flex-1 max-w-40 flex items-center justify-center gap-1 px-6 py-2 bg-gradient-to-r from-[#E8A089] to-[#612A74] rounded-full text-white font-sf-pro text-sm font-normal capitalize transition-all hover:shadow-lg"
+          className="flex-1 max-w-40 flex items-center justify-center gap-1 px-6 py-2 bg-gradient-to-r from-[#E8A089] to-[#612A74] rounded-full text-white font-sf-pro text-sm font-normal capitalize transition-all hover:shadow-lg cursor-pointer"
         >
           {isMuted ? (
             // Muted Icon (with slash)
@@ -111,7 +111,7 @@ export function ConversationControls({
       {/* End Conversation Button */}
       <button
         onClick={onEndConversation}
-        className="w-full max-w-[216px] px-6 py-2 flex items-center justify-center border border-[#401A4D] rounded-full bg-transparent text-[#401A4D] font-sf-pro text-sm font-bold capitalize transition-all hover:bg-[#401A4D] hover:text-white"
+        className="w-full max-w-[328px] px-6 py-2 flex items-center justify-center border border-[#401A4D] rounded-full bg-transparent text-[#401A4D] font-sf-pro text-sm font-bold capitalize transition-all hover:bg-[#401A4D] hover:text-white cursor-pointer"
       >
         End Conversation
       </button>

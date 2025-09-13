@@ -78,14 +78,14 @@ export function DashboardCard({
         <Link href={`/survey?id=${id}`}>
           <button
             onClick={onStartConversation}
-            className="px-6 py-2.5 rounded-full text-[14px] text-white font-normal bg-gradient-to-r from-[#E8A089] to-[#612A74] flex items-center gap-2"
+            className="px-6 py-2.5 rounded-full text-[14px] text-white font-normal bg-gradient-to-r from-[#E8A089] to-[#612A74] flex items-center gap-2 cursor-pointer"
           >
             <CallIcon />
             Start Conversation
           </button>
         </Link>
 
-        <div className="ml-auto flex items-center gap-2 bg-[#F7F4F2] rounded-[12px] min-h-[36px] px-2 shadow-[inset_0_0_0_1px_rgba(103,48,117,0.20),0_1px_2px_rgba(103,48,117,0.05)]">
+        <div className="ml-auto flex items-center gap-2 bg-[#F7F4F2] rounded-[12px] min-h-[36px] px-2 shadow-[inset_0_0_0_1px_rgba(103,48,117,0.20),0_1px_2px_rgba(103,48,117,0.05)] cursor-pointer">
           {/* US flag */}
           <div className="w-6 h-6 rounded-[12px] border border-[#E1E1E1] overflow-hidden grid place-items-center">
             <USFlagIcon />
