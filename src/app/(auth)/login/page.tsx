@@ -101,7 +101,7 @@ export default function LoginPage() {
               </Button>
 
               <p className="font-sf-pro text-xs text-[#776F69] text-center">
-                By Signing up you agree to the <a href="#" className="underline cursor-pointer">Terms & Conditions</a>
+                By Signing up you agree to the <a href="/terms" className="underline cursor-pointer hover:text-[#612A74]">Terms & Conditions</a>
               </p>
             </form>
           </div>

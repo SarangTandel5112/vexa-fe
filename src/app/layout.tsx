@@ -3,6 +3,7 @@ import { Roboto, Bricolage_Grotesque } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthGuard } from "@/components/auth/AuthGuard";
+import { Footer } from "@/components";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -33,9 +34,14 @@ export default function RootLayout({
         className={`${roboto.variable} ${bricolage.variable} antialiased min-h-screen bg-[#F3EEE9]`}
       >
         <AuthProvider>
-          <AuthGuard>
-            {children}
-          </AuthGuard>
+          <div className="min-h-screen flex flex-col">
+            <div className="flex-1">
+              <AuthGuard>
+                {children}
+              </AuthGuard>
+            </div>
+            {/* <Footer /> */}
+          </div>
           <Toaster
             position="top-right"
             toastOptions={{

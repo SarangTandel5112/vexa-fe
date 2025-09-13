@@ -93,8 +93,8 @@ export default function RegisterPage() {
                 Sign Up
               </Button>
 
-              <p className="text-center font-sf-pro text-sm text-[#776F69] underline cursor-pointer">
-                By Signing up you agree to the Terms & Conditions
+              <p className="text-center font-sf-pro text-sm text-[#776F69]">
+                By Signing up you agree to the <a href="/terms" className="underline cursor-pointer hover:text-[#612A74]">Terms & Conditions</a>
               </p>
 
               {/* Divider */}

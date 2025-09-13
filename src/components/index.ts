@@ -16,6 +16,7 @@ export { InputField, TextareaField, SelectField, FormIcons } from './forms/FormF
 // Layout Components
 export { Container, Section, PageWrapper, MainContent, CenteredContent } from './layout/Layout'
 export { Header } from './layout/Header'
+export { Footer } from './layout/Footer'
 
 // Icons
 export { Logo } from './icons/Logo'
