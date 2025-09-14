@@ -25,9 +25,15 @@ export default function SurveyDemoPage({ params }: PageProps) {
     const [timeRemaining, setTimeRemaining] = useState(60 * 60); // 60 minutes in seconds
     const [prePauseMuteState, setPrePauseMuteState] = useState(false); // Remember mute state before pause
     const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const isConversationActiveRef = useRef(isConversationActive);
 
     // Get user and logout function from auth context
     const { user, logout } = useAuth();
+
+    // Update ref whenever isConversationActive changes
+    useEffect(() => {
+        isConversationActiveRef.current = isConversationActive;
+    }, [isConversationActive]);
 
     const conversation = useConversation({
         overrides: {
@@ -37,8 +43,25 @@ export default function SurveyDemoPage({ params }: PageProps) {
         },
         micMuted,
         onConnect: () => console.log("Connected"),
-        onDisconnect: () => console.log("Disconnected"),
-        onMessage: (message) => console.log("Message:", message),
+        onDisconnect: () => {
+            console.log(
+                isConversationActiveRef.current,
+                "Disconnected - Bot ended conversation"
+            );
+            // If conversation is active when disconnect happens, it means bot ended it
+            if (isConversationActiveRef.current) {
+                endConversation();
+                console.log("Bot initiated conversation end detected");
+            }
+        },
+        onMessage: (message) => {
+            console.log(
+                isConversationActiveRef.current,
+                "----------isConversationActive1111========"
+            );
+
+            console.log("Message:", message);
+        },
         onError: (error) => console.error("Error:", error),
     });
 
@@ -110,6 +133,8 @@ export default function SurveyDemoPage({ params }: PageProps) {
             console.error("Error during conversation end process:", error);
             // Continue with UI flow even if there are errors
         } finally {
+            console.log("====Message=====");
+
             // Always update the UI state regardless of API call results
             setIsConversationActive(false);
             setShowEndModal(false);
@@ -172,6 +197,10 @@ export default function SurveyDemoPage({ params }: PageProps) {
                 connectionType: "websocket",
             });
             setIsConversationActive(true);
+            console.log(
+                isConversationActive,
+                "----------isConversationActive========"
+            );
         } catch (error) {
             console.error("Failed to start conversation:", error);
         } finally {
