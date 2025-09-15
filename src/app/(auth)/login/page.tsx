@@ -3,14 +3,17 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { 
-  MainContent, 
+import {
+  MainContent,
+  FeatureCard,
+  FeatureIcons,
   InputField,
   FormIcons,
   Button
-} from "@/components";
+} from "@/components"
 import { useAuth } from '@/contexts/AuthContext';
 import { LoginRequest } from '@/components/types';
+import Link from "next/link"
 
 export default function LoginPage() {
   const router = useRouter();
@@ -19,7 +22,6 @@ export default function LoginPage() {
     username: '',
     password: '',
   });
-
 
   // Show toast for login errors
   useEffect(() => {
@@ -58,15 +60,59 @@ export default function LoginPage() {
   };
 
   return (
-    <MainContent className="py-12">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* Left - Login form */}
-          <div className="w-full">
-            <h2 className="font-bricolage text-[28px] md:text-[32px] font-bold text-[#0A0A0A] leading-[1.2] mb-8">
-              Login to your<br /> account
-            </h2>
+    <MainContent>
+      <div className="max-w-[1200px] mx-auto">
+        <div className="grid grid-cols-12 gap-8 lg:gap-12 items-start">
+          {/* Left Content */}
+          <div className="col-span-12 lg:col-span-7 space-y-12 lg:pr-8">
+            {/* Hero Text */}
+            <div className="space-y-12">
+              <div className="space-y-6">
+                <h2 className="font-bricolage text-[32px] md:text-[40px] font-bold text-[#0A0A0A] leading-[1.2] tracking-[-0.04em]">
+                  Hello, I am Vexa,<br />
+                  Let’s get you ready for the interview!
+                </h2>
+                <p className="font-roboto text-[20px] md:text-[27px] font-normal text-[#776F69] leading-[1.26]">
+                  I turn surveys into real conversations - natural, unbiased, and smart. Helping you uncover insights that truly matter.
+                </p>
+              </div>
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Feature Cards */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-3">
+              <FeatureCard 
+                icon={<FeatureIcons.PersonalizedConversations />}
+                title="Personalised Conversations"
+                description="Chats that adapt to each user, making surveys feel natural."
+              />
+
+              <FeatureCard 
+                icon={<FeatureIcons.SmartModeration />}
+                title="Smart Moderation"
+                description="Keeps discussions unbiased, clear, and easy to follow."
+              />
+
+              <FeatureCard 
+                icon={<FeatureIcons.ActionableInsights />}
+                title="Actionable Insights"
+                description="Delivers clean reports with the insights that matter most."
+              />
+            </div>
+          </div>
+
+          {/* Right Content - Login Form */}
+          <div className="col-span-12 lg:col-span-5 space-y-10">
+            <div className="space-y-4">
+              <h2 className="font-bricolage text-[32px] md:text-[40px] font-bold text-[#0A0A0A] leading-[1.2] tracking-[-0.04em]">
+                Login to your<br />
+                account
+              </h2>
+              <p className="font-sf-pro text-base font-normal text-[#776F69]">
+                Don&apos;t have an account? <Link href="/register" className="text-[#612A74] font-semibold cursor-pointer hover:underline">Sign Up</Link>
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
               <InputField
                 type="text" 
                 placeholder="User Id" 
@@ -87,7 +133,9 @@ export default function LoginPage() {
               />
 
               <div className="text-right">
-                <a href="#" className="font-sf-pro text-sm font-semibold text-[#612A74] hover:underline cursor-pointer">Forgot Password?</a>
+                <button type="button" className="font-sf-pro text-sm font-semibold text-[#612A74] hover:underline cursor-pointer">
+                  Forgot Password?
+                </button>
               </div>
 
               <Button 
@@ -100,21 +148,13 @@ export default function LoginPage() {
                 {isLoggingIn ? 'Signing in...' : 'Login'}
               </Button>
 
-              <p className="font-sf-pro text-xs text-[#776F69] text-center">
-                By Signing up you agree to the <a href="/terms" className="underline cursor-pointer hover:text-[#612A74]">Terms & Conditions</a>
+              <p className="text-center font-sf-pro text-sm text-[#776F69]">
+                By Signing in you agree to the <a href="/terms" className="underline cursor-pointer hover:text-[#612A74]">Terms & Conditions</a>
               </p>
             </form>
           </div>
-
-          {/* Right - Decorative image */}
-          <div className="w-full">
-            <img
-              src="./login_bg.png"
-              alt="Abstract swirl graphic"
-              className="w-full h-auto rounded-[12px] shadow-sm"
-            />
-          </div>
         </div>
-      </MainContent>
-  );
+      </div>
+    </MainContent>
+  )
 }
