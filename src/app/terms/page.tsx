@@ -115,7 +115,10 @@ export default function TermsPage() {
                   <h3 className="text-lg md:text-xl font-bold mb-3">6. Your Data Protection Rights</h3>
                   <p className="text-base md:text-lg leading-relaxed">
                     Under UK GDPR, you have the right to request access to, correction of, or erasure of your data. 
-                    To exercise these rights, please contact Greybatter at info@greybatter.com.
+                    To exercise these rights, please contact Greybatter at{' '}
+                    <a href="mailto:arindam@brandeigen.com" className="underline hover:text-[#612A74] transition-colors">
+                      arindam@brandeigen.com
+                    </a>.
                   </p>
                 </div>
 

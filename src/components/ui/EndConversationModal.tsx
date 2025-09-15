@@ -44,7 +44,7 @@ export function EndConversationModal({ isOpen, onClose, onConfirm }: EndConversa
               onClick={onConfirm}
               className="flex-1 flex justify-center items-center px-6 py-[18px] rounded-[36px] bg-[#BD3D44] text-[#F3EEE9] font-['SF_Pro_Rounded'] text-[16px] font-bold leading-[20px] transition-all hover:bg-[#a03439] cursor-pointer"
             >
-              End Now
+              End & Logout
             </button>
           </div>
         </div>

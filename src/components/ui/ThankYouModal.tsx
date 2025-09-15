@@ -28,6 +28,12 @@ export function ThankYouModal({ isOpen, onClose }: ThankYouModalProps) {
             <p className="text-[#0A0A0A] text-center font-['SF_Pro_Rounded'] text-[18px] font-normal leading-[150%] w-full">
               Your responses have been recorded.
             </p>
+
+            {/* Warning Text */}
+            <p className="text-[#0A0A0A] text-center font-['SF_Pro_Rounded'] text-[18px] font-normal leading-[150%] w-full">
+              <span className="font-bold">WARNING: </span>
+              Login is limited to a single session only.
+            </p>
           </div>
 
           {/* Checkmark Icon */}
