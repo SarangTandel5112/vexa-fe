@@ -34,7 +34,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
       // Check if there's a stored redirect path
       const redirectPath = sessionStorage.getItem('redirectAfterLogin');
       sessionStorage.removeItem('redirectAfterLogin'); // Clean up
-      router.push(redirectPath || '/survey');
+      router.push(redirectPath || '/');
     }
   }, [isAuthenticated, isLoading, pathname, router]);
 

@@ -56,7 +56,7 @@ export default function LoginPage() {
             sessionStorage.removeItem("redirectAfterLogin"); // Clean up
 
             // Redirect to the stored path or home page
-            router.push(redirectPath || "/survey");
+            router.push(redirectPath || "/");
         }
         // Error will be shown via useEffect above
     };

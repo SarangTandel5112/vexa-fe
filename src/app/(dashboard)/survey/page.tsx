@@ -47,10 +47,10 @@ export default function SurveyPage() {
 
   const handleStart = () => {
     if (surveyId) {
-      router.push(`/survey/${surveyId}`);
+      router.push(`/${surveyId}`);
     } else {
       // Fallback if no ID is provided
-      router.push("/survey/29e2b734-cad3-4a35-94a5-81dcd3c4f364");
+      router.push("/29e2b734-cad3-4a35-94a5-81dcd3c4f364");
     }
   };
 
