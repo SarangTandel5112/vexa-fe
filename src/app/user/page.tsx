@@ -58,7 +58,7 @@ const userData: UserData[] = [
 export default function UserPage() {
   return (
     <PageWrapper>
-      <Header variant="dashboard" showNewTopic={true} />
+      <Header variant="dashboard" />
       
       <MainContent className="py-4">
         {/* Company Info Section */}

@@ -73,7 +73,7 @@ export default function ContactPage() {
           description: ''
         });
       }
-    } catch (error) {
+        } catch {
       setErrors(['An unexpected error occurred. Please try again.']);
     } finally {
       setIsSubmitting(false);

@@ -17,7 +17,7 @@ interface PageProps {
     };
 }
 
-export default function SurveyDemoPage({ params }: PageProps) {
+export default function SurveyDemoPage({}: PageProps) {
     const [isConversationActive, setIsConversationActive] = useState(false);
     const [showEndModal, setShowEndModal] = useState(false);
     const [showThankYouModal, setShowThankYouModal] = useState(false);
@@ -90,16 +90,9 @@ export default function SurveyDemoPage({ params }: PageProps) {
                 console.log("Bot initiated conversation end detected");
             }
         },
-        onMessage: (message) => {
-            // Detect when AI starts/stops speaking
-            if (message.type === "agent_response_started") {
-                setIsAISpeaking(true);
-            } else if (
-                message.type === "agent_response_completed" ||
-                message.type === "agent_response_corrected"
-            ) {
-                setIsAISpeaking(false);
-            }
+        onMessage: () => {
+            // Voice detection is handled by Web Audio API
+            // ElevenLabs message events may not contain the type property we need
         },
         onError: (error) => console.error("Error:", error),
     });
@@ -233,7 +226,7 @@ export default function SurveyDemoPage({ params }: PageProps) {
             });
 
             audioContextRef.current = new (window.AudioContext ||
-                (window as any).webkitAudioContext)();
+                (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
             analyserRef.current = audioContextRef.current.createAnalyser();
             microphoneRef.current =
                 audioContextRef.current.createMediaStreamSource(stream);
@@ -242,7 +235,7 @@ export default function SurveyDemoPage({ params }: PageProps) {
             analyserRef.current.smoothingTimeConstant = 0.8;
             microphoneRef.current.connect(analyserRef.current);
 
-            detectVoiceActivity();
+            // Voice detection will be handled by the detectVoiceActivity useCallback
         } catch (error) {
             console.error("Failed to setup voice activity detection:", error);
         }
@@ -356,8 +349,6 @@ export default function SurveyDemoPage({ params }: PageProps) {
         try {
             setIsLoading(true);
             await navigator.mediaDevices.getUserMedia({ audio: true });
-
-            console.log(user, "----user------");
 
             // Use agent_id from user object, fallback to default if not available
             const agentId = user?.agent_id || "XabqnwlhQf0xe3M4Ew7p";

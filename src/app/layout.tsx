@@ -3,7 +3,7 @@ import { Roboto, Bricolage_Grotesque } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AuthGuard } from "@/components/auth/AuthGuard";
-import { Footer } from "@/components";
+// import { Navigation } from "@/components";
 import "./globals.css";
 
 const roboto = Roboto({

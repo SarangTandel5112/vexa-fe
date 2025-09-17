@@ -53,7 +53,6 @@ const LogoutButton = () => {
 
 export function Header({
     variant = "landing",
-    showNewTopic = false,
     showDemo = true,
     className = "",
 }: HeaderProps) {

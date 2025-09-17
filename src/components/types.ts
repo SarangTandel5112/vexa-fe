@@ -47,7 +47,6 @@ export interface LogoProps {
 
 export interface HeaderProps {
   variant?: 'landing' | 'dashboard' | 'auth';
-  showNewTopic?: boolean;
   showDemo?: boolean;
   className?: string;
 }
@@ -107,7 +106,9 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   message?: string;
-  user?: User;
+  username?: string;
+  agent_id?: string;
+  agent_name?: string;
   success?: boolean;
 }
 

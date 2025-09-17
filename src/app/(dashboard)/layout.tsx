@@ -9,7 +9,7 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <Header variant="dashboard" showNewTopic={true} />
+      <Header variant="dashboard" />
       {children}
     </>
   )
