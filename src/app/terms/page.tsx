@@ -1,16 +1,18 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
 import { Button } from '@/components/ui/Button'
 
 export default function TermsPage() {
   const [isAgreed, setIsAgreed] = useState(false)
+  const router = useRouter()
 
   const handleAgreeAndContinue = () => {
     if (isAgreed) {
-      // Handle agreement action (e.g., redirect or proceed to next step)
-      console.log('User agreed to terms')
+      // Redirect to login page
+      router.push('/login')
     }
   }
 
