@@ -8,6 +8,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { conversationService } from "@/services/conversation.service";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
+import orbAnimation from "@/assets/orb.json";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
 interface PageProps {
     params: {
@@ -24,8 +26,17 @@ export default function SurveyDemoPage({ params }: PageProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [timeRemaining, setTimeRemaining] = useState(60 * 60); // 60 minutes in seconds
     const [prePauseMuteState, setPrePauseMuteState] = useState(false); // Remember mute state before pause
+    // Voice activity detection states
+    const [isUserSpeaking, setIsUserSpeaking] = useState(false);
+    const [isAISpeaking, setIsAISpeaking] = useState(false);
+    const [voiceIntensity, setVoiceIntensity] = useState(0); // 0-100 voice intensity level
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const isConversationActiveRef = useRef(isConversationActive);
+    const lottieRef = useRef<LottieRefCurrentProps>(null);
+    const audioContextRef = useRef<AudioContext | null>(null);
+    const analyserRef = useRef<AnalyserNode | null>(null);
+    const microphoneRef = useRef<MediaStreamAudioSourceNode | null>(null);
+    const animationFrameRef = useRef<number | null>(null);
 
     // Get user and logout function from auth context
     const { user, logout } = useAuth();
@@ -34,6 +45,31 @@ export default function SurveyDemoPage({ params }: PageProps) {
     useEffect(() => {
         isConversationActiveRef.current = isConversationActive;
     }, [isConversationActive]);
+
+    // Voice activity detection cleanup function
+    const cleanupVoiceActivityDetection = useCallback(() => {
+        if (animationFrameRef.current) {
+            cancelAnimationFrame(animationFrameRef.current);
+            animationFrameRef.current = null;
+        }
+
+        if (microphoneRef.current) {
+            microphoneRef.current.disconnect();
+            microphoneRef.current = null;
+        }
+
+        if (
+            audioContextRef.current &&
+            audioContextRef.current.state !== "closed"
+        ) {
+            audioContextRef.current.close();
+            audioContextRef.current = null;
+        }
+
+        analyserRef.current = null;
+        setIsUserSpeaking(false);
+        setIsAISpeaking(false);
+    }, []);
 
     const conversation = useConversation({
         overrides: {
@@ -55,12 +91,15 @@ export default function SurveyDemoPage({ params }: PageProps) {
             }
         },
         onMessage: (message) => {
-            console.log(
-                isConversationActiveRef.current,
-                "----------isConversationActive1111========"
-            );
-
-            console.log("Message:", message);
+            // Detect when AI starts/stops speaking
+            if (message.type === "agent_response_started") {
+                setIsAISpeaking(true);
+            } else if (
+                message.type === "agent_response_completed" ||
+                message.type === "agent_response_corrected"
+            ) {
+                setIsAISpeaking(false);
+            }
         },
         onError: (error) => console.error("Error:", error),
     });
@@ -135,6 +174,9 @@ export default function SurveyDemoPage({ params }: PageProps) {
         } finally {
             console.log("====Message=====");
 
+            // Clean up voice activity detection
+            cleanupVoiceActivityDetection();
+
             // Always update the UI state regardless of API call results
             setIsConversationActive(false);
             setShowEndModal(false);
@@ -143,7 +185,7 @@ export default function SurveyDemoPage({ params }: PageProps) {
             setTimeRemaining(60 * 60); // Reset timer for next session
             setShowThankYouModal(true);
         }
-    }, [conversation, user, logout]);
+    }, [conversation, user, logout, cleanupVoiceActivityDetection]);
 
     // Timer useEffect
     useEffect(() => {
@@ -179,6 +221,128 @@ export default function SurveyDemoPage({ params }: PageProps) {
         }
     }, [isConversationActive, timeRemaining, endConversation]);
 
+    // Voice activity detection using Web Audio API
+    const setupVoiceActivityDetection = useCallback(async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true,
+                },
+            });
+
+            audioContextRef.current = new (window.AudioContext ||
+                (window as any).webkitAudioContext)();
+            analyserRef.current = audioContextRef.current.createAnalyser();
+            microphoneRef.current =
+                audioContextRef.current.createMediaStreamSource(stream);
+
+            analyserRef.current.fftSize = 256;
+            analyserRef.current.smoothingTimeConstant = 0.8;
+            microphoneRef.current.connect(analyserRef.current);
+
+            detectVoiceActivity();
+        } catch (error) {
+            console.error("Failed to setup voice activity detection:", error);
+        }
+    }, []);
+
+    const detectVoiceActivity = useCallback(() => {
+        if (
+            !analyserRef.current ||
+            !isConversationActive ||
+            isPaused ||
+            micMuted
+        ) {
+            setIsUserSpeaking(false);
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+            return;
+        }
+
+        const bufferLength = analyserRef.current.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        const checkAudioLevel = () => {
+            if (
+                !analyserRef.current ||
+                !isConversationActive ||
+                isPaused ||
+                micMuted
+            ) {
+                setIsUserSpeaking(false);
+                return;
+            }
+
+            analyserRef.current.getByteFrequencyData(dataArray);
+
+            // Calculate RMS (Root Mean Square) for volume level
+            let sum = 0;
+            for (let i = 0; i < bufferLength; i++) {
+                sum += dataArray[i] * dataArray[i];
+            }
+            const rms = Math.sqrt(sum / bufferLength);
+
+            // Calculate voice intensity (0-100 scale)
+            const intensity = Math.min(100, Math.max(0, (rms / 80) * 100));
+            setVoiceIntensity(intensity);
+
+            // Adjust threshold as needed (15-25 works well for most microphones)
+            const threshold = 15;
+            const speaking = rms > threshold;
+
+            setIsUserSpeaking(speaking);
+
+            animationFrameRef.current = requestAnimationFrame(checkAudioLevel);
+        };
+
+        checkAudioLevel();
+    }, [isConversationActive, isPaused, micMuted]);
+
+    // Setup voice activity detection when conversation starts
+    useEffect(() => {
+        if (isConversationActive && !isPaused) {
+            setupVoiceActivityDetection();
+        } else {
+            cleanupVoiceActivityDetection();
+        }
+
+        return () => cleanupVoiceActivityDetection();
+    }, [
+        isConversationActive,
+        isPaused,
+        setupVoiceActivityDetection,
+        cleanupVoiceActivityDetection,
+    ]);
+
+    // Start voice activity detection when not muted
+    useEffect(() => {
+        if (isConversationActive && !isPaused) {
+            detectVoiceActivity();
+        }
+    }, [micMuted, detectVoiceActivity, isConversationActive, isPaused]);
+
+    // Control Lottie animation based on voice activity and intensity
+    useEffect(() => {
+        if (!lottieRef.current) return;
+
+        const isSomeoneElseSpeaking = isUserSpeaking || isAISpeaking;
+
+        if (isSomeoneElseSpeaking) {
+            // Dynamic speed based on voice intensity (1.5x - 3x speed)
+            const intensityMultiplier = isUserSpeaking
+                ? Math.max(1.5, Math.min(3, 1.5 + (voiceIntensity / 100) * 1.5))
+                : 2.5; // AI speaking gets consistent higher speed
+
+            lottieRef.current.setSpeed(intensityMultiplier);
+        } else {
+            // Gentle animation when not speaking (0.8x speed)
+            lottieRef.current.setSpeed(0.8);
+        }
+    }, [isUserSpeaking, isAISpeaking, voiceIntensity]);
+
     // Format time as MM:SS
     const formatTime = (seconds: number): string => {
         const minutes = Math.floor(seconds / 60);
@@ -192,8 +356,14 @@ export default function SurveyDemoPage({ params }: PageProps) {
         try {
             setIsLoading(true);
             await navigator.mediaDevices.getUserMedia({ audio: true });
+
+            console.log(user, "----user------");
+
+            // Use agent_id from user object, fallback to default if not available
+            const agentId = user?.agent_id || "XabqnwlhQf0xe3M4Ew7p";
+
             await conversation.startSession({
-                agentId: "XabqnwlhQf0xe3M4Ew7p",
+                agentId: agentId,
                 connectionType: "websocket",
             });
             setIsConversationActive(true);
@@ -259,14 +429,109 @@ export default function SurveyDemoPage({ params }: PageProps) {
             {/* Center Image with Glow Effect */}
             <div className="relative mb-12">
                 <div className="w-[280px] md:w-[298px] h-[280px] md:h-[298px] rounded-full flex items-center justify-center relative">
-                    {/* Glow effect */}
-                    <div className="absolute inset-0 rounded-full shadow-[0_0_40px_rgba(222,115,122,0.3)]" />
-                    {/* Image */}
+                    {/* Dynamic glow effect that responds to voice intensity */}
+                    <div
+                        className="absolute inset-0 rounded-full transition-all duration-200"
+                        style={{
+                            boxShadow:
+                                isUserSpeaking || isAISpeaking
+                                    ? `0 0 ${Math.max(
+                                          40,
+                                          40 + (voiceIntensity / 100) * 40
+                                      )}px rgba(222, 115, 122, ${Math.max(
+                                          0.4,
+                                          0.4 + (voiceIntensity / 100) * 0.4
+                                      )})`
+                                    : "0 0 30px rgba(222, 115, 122, 0.25)",
+                            transform:
+                                isUserSpeaking || isAISpeaking
+                                    ? `scale(${Math.max(
+                                          1.02,
+                                          1.02 + (voiceIntensity / 100) * 0.08
+                                      )})`
+                                    : "scale(1)",
+                        }}
+                    />
+
+                    {/* Animated rings when someone is speaking - respond to voice intensity */}
+                    {(isUserSpeaking || isAISpeaking) && (
+                        <>
+                            {/* Ring 1 - innermost, contained within the orb */}
+                            <div
+                                className="absolute inset-[10px] rounded-full border-2 animate-pulse"
+                                style={{
+                                    borderColor: `rgba(222, 115, 122, ${Math.max(
+                                        0.3,
+                                        0.3 + (voiceIntensity / 100) * 0.4
+                                    )})`,
+                                    transform: `scale(${Math.max(
+                                        0.95,
+                                        0.95 + (voiceIntensity / 100) * 0.1
+                                    )})`,
+                                    animationDuration: isUserSpeaking
+                                        ? `${Math.max(
+                                              1.2,
+                                              2 - (voiceIntensity / 100) * 0.8
+                                          )}s`
+                                        : "1.8s",
+                                }}
+                            />
+                            {/* Ring 2 - middle ring, still within bounds */}
+                            <div
+                                className="absolute inset-[5px] rounded-full border-2 animate-pulse"
+                                style={{
+                                    borderColor: `rgba(222, 115, 122, ${Math.max(
+                                        0.2,
+                                        0.2 + (voiceIntensity / 100) * 0.3
+                                    )})`,
+                                    transform: `scale(${Math.max(
+                                        0.98,
+                                        0.98 + (voiceIntensity / 100) * 0.05
+                                    )})`,
+                                    animationDelay: "0.4s",
+                                    animationDuration: isUserSpeaking
+                                        ? `${Math.max(
+                                              1.5,
+                                              2.3 - (voiceIntensity / 100) * 0.8
+                                          )}s`
+                                        : "2.1s",
+                                }}
+                            />
+                            {/* Ring 3 - outer ring, stays within container */}
+                            <div
+                                className="absolute inset-[2px] rounded-full border-[1px] animate-pulse"
+                                style={{
+                                    borderColor: `rgba(222, 115, 122, ${Math.max(
+                                        0.15,
+                                        0.15 + (voiceIntensity / 100) * 0.25
+                                    )})`,
+                                    transform: `scale(${Math.max(
+                                        0.99,
+                                        0.99 + (voiceIntensity / 100) * 0.02
+                                    )})`,
+                                    animationDelay: "0.8s",
+                                    animationDuration: isUserSpeaking
+                                        ? `${Math.max(
+                                              1.8,
+                                              2.5 - (voiceIntensity / 100) * 0.7
+                                          )}s`
+                                        : "2.4s",
+                                }}
+                            />
+                        </>
+                    )}
+
+                    {/* Lottie Animation */}
                     <div className="relative w-full h-full rounded-full overflow-hidden">
-                        <img
-                            src="/survey.png"
-                            alt="Pink swirl decoration"
-                            className="w-full h-full object-cover scale-150"
+                        <Lottie
+                            lottieRef={lottieRef}
+                            animationData={orbAnimation}
+                            loop={true}
+                            className={`transition-transform duration-300 ${
+                                isUserSpeaking || isAISpeaking
+                                    ? "scale-110"
+                                    : "scale-100"
+                            }`}
                         />
                     </div>
                 </div>

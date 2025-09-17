@@ -143,10 +143,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       // Check if login was successful based on the message
       if (response.data?.message === 'Login successful' || response.data?.message === 'User already conversed') {
-        // Create user object from login credentials since API doesn't return user data
+        // Create user object from login response data
         const user: User = {
-          username: credentials.username,
+          username: response.data?.username || credentials.username,
           email: credentials.username.includes('@') ? credentials.username : undefined,
+          agent_id: response.data?.agent_id,
+          agent_name: response.data?.agent_name,
         };
 
         dispatch({ type: 'LOGIN_SUCCESS', payload: user });

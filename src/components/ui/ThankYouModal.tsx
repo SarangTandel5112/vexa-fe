@@ -4,9 +4,11 @@ import { Modal } from './Modal';
 interface ThankYouModalProps {
   isOpen: boolean;
   onClose: () => void;
+  showEndDemoButton?: boolean;
+  onEndDemo?: () => void;
 }
 
-export function ThankYouModal({ isOpen, onClose }: ThankYouModalProps) {
+export function ThankYouModal({ isOpen, onClose, showEndDemoButton, onEndDemo }: ThankYouModalProps) {
   return (
     <Modal 
       isOpen={isOpen} 
@@ -97,6 +99,16 @@ export function ThankYouModal({ isOpen, onClose }: ThankYouModalProps) {
 
           {/* Bottom Section */}
           <div className="flex flex-col items-center gap-[11px] w-full max-w-[364px]">
+            {/* End Demo Button - only show for demo */}
+            {showEndDemoButton && onEndDemo && (
+              <button
+                onClick={onEndDemo}
+                className="w-[174px] px-6 py-[18px] flex justify-center items-center rounded-[36px] bg-[#612A74] text-[#F3EEE9] font-['SF_Pro_Rounded'] text-[20px] font-bold leading-[20px] transition-all hover:bg-[#4f1e5c] cursor-pointer"
+              >
+                End Demo
+              </button>
+            )}
+            
             {/* Exit Button */}
             <button
               onClick={onClose}

@@ -121,6 +121,8 @@ export interface User {
   username: string;
   email?: string;
   name?: string;
+  agent_id?: string;
+  agent_name?: string;
 }
 
 export interface AuthState {
