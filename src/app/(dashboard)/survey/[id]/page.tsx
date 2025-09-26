@@ -117,21 +117,21 @@ export default function SurveyDemoPage({}: PageProps) {
                     "Calling mark_unusable API for user:",
                     user.username
                 );
-                const markUnusableResponse =
-                    await conversationService.markUnusable(user.username);
+                // const markUnusableResponse =
+                //     await conversationService.markUnusable(user.username);
 
-                if (markUnusableResponse.error) {
-                    console.error(
-                        "Failed to mark user as unusable:",
-                        markUnusableResponse.error
-                    );
-                    // Don't block the UI flow even if the API call fails
-                } else {
-                    console.log(
-                        "Successfully marked user as unusable:",
-                        markUnusableResponse.data
-                    );
-                }
+                // if (markUnusableResponse.error) {
+                //     console.error(
+                //         "Failed to mark user as unusable:",
+                //         markUnusableResponse.error
+                //     );
+                //     // Don't block the UI flow even if the API call fails
+                // } else {
+                //     console.log(
+                //         "Successfully marked user as unusable:",
+                //         markUnusableResponse.data
+                //     );
+                // }
 
                 // Call logout API after 5 seconds
                 console.log("Scheduling logout API call for 5 seconds...");
