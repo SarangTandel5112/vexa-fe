@@ -19,7 +19,7 @@ export function VideoRecorder({
     onError,
     showVideoPreview = false,
     videoPreviewRef: externalVideoRef,
-    username,
+    username: _username,
 }: VideoRecorderProps) {
     const [isRecording, setIsRecording] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
@@ -73,100 +73,30 @@ export function VideoRecorder({
         }
     }, [onError]);
 
-    // Upload video to Mux
+    // Mock video upload - no Mux API integration
     const uploadVideo = useCallback(
         async (videoBlob: Blob) => {
             try {
                 setIsUploading(true);
 
-                // Get upload URL from API
-                const response = await fetch("/api/mux/upload-url", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                // Simulate upload delay
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+
+                // Mock asset ID and playback URL
+                const mockAssetId = `mock-asset-${Date.now()}`;
+                const mockPlaybackUrl = `https://stream.mux.com/${mockAssetId}.m3u8`;
+
+                console.log("Video recorded (mock upload):", {
+                    size: videoBlob.size,
+                    type: videoBlob.type,
+                    assetId: mockAssetId,
                 });
 
-                if (!response.ok) {
-                    throw new Error("Failed to get upload URL");
-                }
-
-                const { data } = await response.json();
-                const { uploadUrl, uploadId } = data;
-
-                // Upload video file
-                const uploadResponse = await fetch(uploadUrl, {
-                    method: "PUT",
-                    body: videoBlob,
-                    headers: {
-                        "Content-Type": "video/webm",
-                    },
-                });
-
-                if (!uploadResponse.ok) {
-                    throw new Error("Failed to upload video");
-                }
-
-                // Wait for upload to complete and get asset ID
-                let assetId = null;
-                let attempts = 0;
-                const maxAttempts = 30; // Wait up to 30 seconds
-
-                while (!assetId && attempts < maxAttempts) {
-                    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second
-
-                    const statusResponse = await fetch(
-                        `/api/mux/upload-status?uploadId=${uploadId}`
-                    );
-                    if (statusResponse.ok) {
-                        const statusData = await statusResponse.json();
-                        if (statusData.data.assetId) {
-                            assetId = statusData.data.assetId;
-                            break;
-                        }
-                    }
-                    attempts++;
-                }
-
-                if (!assetId) {
-                    throw new Error("Failed to get asset ID after upload");
-                }
-
-                // Get playback URL
-                const playbackUrl = `https://stream.mux.com/${assetId}.m3u8`;
-
-                // Store asset ID in backend if username is provided
-                if (username && assetId) {
-                    try {
-                        console.log('📝 Storing asset ID in backend...', { username, assetId });
-                        const backendResponse = await fetch('https://vexa-backend.greybatter.com/api/asset', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                username: username,
-                                assetId: assetId
-                            }),
-                        });
-
-                        if (!backendResponse.ok) {
-                            throw new Error(`Backend API call failed: ${backendResponse.status}`);
-                        }
-
-                        const backendData = await backendResponse.json();
-                        console.log('✅ Asset ID stored successfully in backend:', backendData);
-                    } catch (backendError) {
-                        console.error('❌ Failed to store asset ID in backend:', backendError);
-                        // Don't fail the whole upload process, just log the error
-                        onError?.(`Video uploaded successfully, but failed to store in backend: ${backendError instanceof Error ? backendError.message : 'Unknown error'}`);
-                    }
-                }
-
-                onUploadComplete?.(assetId, playbackUrl);
+                // Call the callback with mock data
+                onUploadComplete?.(mockAssetId, mockPlaybackUrl);
             } catch (error) {
-                console.error("Error uploading video:", error);
-                onError?.("Failed to upload video. Please try again.");
+                console.error("Error in mock video upload:", error);
+                onError?.("Failed to process video. Please try again.");
             } finally {
                 setIsUploading(false);
             }
