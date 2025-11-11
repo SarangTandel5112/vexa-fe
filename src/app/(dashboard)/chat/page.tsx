@@ -25,25 +25,21 @@ export default function ChatPage() {
     };
 
     return (
-        <div className="h-[calc(100vh-64px)] bg-background flex flex-col">
-            <div className="w-full flex-1 px-4 py-3 md:py-6 border-b border-[#FAFAF9] bg-[#FAFAF9] overflow-hidden flex flex-col">
-                <div className="flex-1 flex flex-col items-center justify-center px-2 py-2 md:px-8 md:py-12 min-h-0">
-                    <div className="w-full max-w-[1440px] h-full flex flex-col gap-4 md:gap-10">
-                        <div className="flex-1 flex items-center min-h-0 overflow-hidden">
-                            <ChatParticipants
-                                participants={[defaultModerator, defaultUser]}
-                            />
-                        </div>
+        <div className="h-[calc(100vh-140px)] flex flex-col items-center justify-center px-4 py-6 md:py-8">
+            <div className="w-full max-w-[1440px] h-full flex flex-col gap-4 md:gap-10">
+                <div className="flex-1 flex items-center min-h-0 overflow-hidden">
+                    <ChatParticipants
+                        participants={[defaultModerator, defaultUser]}
+                    />
+                </div>
 
-                        <div className="flex-shrink-0 pb-2 md:pb-0">
-                            <ChatControls
-                                onMicrophoneToggle={handleMicrophoneToggle}
-                                onVideoToggle={handleVideoToggle}
-                                onPause={handlePause}
-                                onStartConversation={handleStartConversation}
-                            />
-                        </div>
-                    </div>
+                <div className="flex-shrink-0 pb-2 md:pb-0">
+                    <ChatControls
+                        onMicrophoneToggle={handleMicrophoneToggle}
+                        onVideoToggle={handleVideoToggle}
+                        onPause={handlePause}
+                        onStartConversation={handleStartConversation}
+                    />
                 </div>
             </div>
         </div>

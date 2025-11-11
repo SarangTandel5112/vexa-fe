@@ -8,9 +8,11 @@ export default function AuthLayout({
     children: React.ReactNode;
 }) {
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <LandingHeader />
-            {children}
-        </>
+            <main className="flex-1 bg-[#FAFAF9]">
+                {children}
+            </main>
+        </div>
     );
 }

@@ -29,11 +29,9 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${roboto.variable} ${bricolage.variable} antialiased min-h-screen bg-[#F3EEE9]`}
+                className={`${roboto.variable} ${bricolage.variable} antialiased bg-[#F3EEE9]`}
             >
-                <div className="min-h-screen flex flex-col">
-                    <div className="flex-1 bg-[#FAFAF9]">{children}</div>
-                </div>
+                {children}
                 <Toaster
                     position="top-right"
                     toastOptions={{

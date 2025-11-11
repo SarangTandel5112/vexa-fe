@@ -16,7 +16,7 @@ export default function SurveyPage() {
     };
 
     return (
-        <div className="flex flex-col justify-between items-center min-h-screen px-4 sm:px-8 py-8 pb-36 sm:pb-36">
+        <div className="flex flex-col justify-between items-center px-4 sm:px-8 py-8 pb-36 sm:pb-36">
             <div className="flex flex-col items-center gap-14 sm:gap-[3.3125rem] w-full">
                 {/* Header Section */}
                 <div className="flex flex-col items-center text-center gap-5 sm:gap-2.5 px-4 max-w-[90rem] pt-0 sm:pt-[2.8125rem]">
