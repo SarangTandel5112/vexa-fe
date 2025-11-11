@@ -1,56 +1,45 @@
-import { apiClient, ApiResponse } from '@/utils/api-client';
-import { ContactRequest, ContactResponse } from '@/components/types';
+/**
+ * Contact Service
+ * Refactored to follow Single Responsibility and Dependency Inversion Principles
+ * Validation logic moved to validators, uses injected HTTP client
+ */
+
+import { ApiResponse } from "@/utils/api-client";
+import { ContactRequest, ContactResponse } from "@/components/types";
+import { IHttpClient, httpClient, HttpError } from "@/lib/http";
 
 export class ContactService {
-  private readonly apiUrl = '/contact';
+    private readonly apiUrl = "/contact";
 
-  /**
-   * Submit contact form data
-   */
-  async submitContact(contactData: ContactRequest): Promise<ApiResponse<ContactResponse>> {
-    return apiClient.post<ContactResponse>(this.apiUrl, contactData);
-  }
+    constructor(private httpClient: IHttpClient) {}
 
-  /**
-   * Validate contact form data
-   */
-  validateContactData(contactData: ContactRequest): { isValid: boolean; errors: string[] } {
-    const errors: string[] = [];
+    /**
+     * Submit contact form data
+     */
+    async submitContact(
+        contactData: ContactRequest
+    ): Promise<ApiResponse<ContactResponse>> {
+        try {
+            const response = await this.httpClient.post<ContactResponse>(
+                this.apiUrl,
+                contactData
+            );
 
-    if (!contactData.companyName?.trim()) {
-      errors.push('Company name is required');
+            return {
+                data: response.data,
+                error: undefined,
+                status: response.status,
+            };
+        } catch (error) {
+            const httpError = error as HttpError;
+            return {
+                data: undefined,
+                error: httpError.message || "Failed to submit contact form",
+                status: httpError.status || 0,
+            };
+        }
     }
-
-    if (!contactData.email?.trim()) {
-      errors.push('Email is required');
-    } else if (!this.isValidEmail(contactData.email)) {
-      errors.push('Please enter a valid email address');
-    }
-
-    if (!contactData.purpose?.trim()) {
-      errors.push('Purpose is required');
-    }
-
-    if (!contactData.description?.trim()) {
-      errors.push('Description is required');
-    } else if (contactData.description.length < 10) {
-      errors.push('Description must be at least 10 characters long');
-    }
-
-    return {
-      isValid: errors.length === 0,
-      errors,
-    };
-  }
-
-  /**
-   * Basic email validation
-   */
-  private isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
 }
 
-// Create a default instance
-export const contactService = new ContactService();
+// Create a default instance with injected dependency
+export const contactService = new ContactService(httpClient);

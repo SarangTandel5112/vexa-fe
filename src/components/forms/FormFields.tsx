@@ -17,8 +17,10 @@ import {
 export function InputField({
     type = "text",
     placeholder,
+    name,
     value,
     onChange,
+    onBlur,
     icon,
     showPasswordToggle = false,
     disabled = false,
@@ -52,9 +54,11 @@ export function InputField({
                 {icon && icon}
                 <input
                     type={inputType}
+                    name={name}
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
+                    onBlur={onBlur}
                     disabled={disabled}
                     className="flex-1 bg-transparent outline-none font-sf-pro text-base text-[#0A0A0A] placeholder:text-[#776F69] disabled:cursor-not-allowed"
                 />

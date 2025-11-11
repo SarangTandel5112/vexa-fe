@@ -1,5 +1,4 @@
 import React from "react";
-import { Header } from "@/components/layout/Header";
 import { PageWrapper, MainContent } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/Button";
 import {
@@ -87,8 +86,6 @@ const userData: UserData[] = [
 export default function UserPage() {
     return (
         <PageWrapper>
-            <Header variant="dashboard" />
-
             <MainContent className="py-4">
                 {/* Company Info Section */}
                 <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 mb-8">

@@ -14,8 +14,10 @@ export interface ButtonProps {
 export interface InputFieldProps {
   type?: 'text' | 'email' | 'password';
   placeholder?: string;
+  name?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   icon?: React.ReactNode;
   showPasswordToggle?: boolean;
   disabled?: boolean;
@@ -24,16 +26,20 @@ export interface InputFieldProps {
 
 export interface TextareaFieldProps {
   placeholder?: string;
+  name?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
   rows?: number;
   className?: string;
 }
 
 export interface SelectFieldProps {
   placeholder?: string;
+  name?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLSelectElement>) => void;
   options: { value: string; label: string }[];
   icon?: React.ReactNode;
   className?: string;

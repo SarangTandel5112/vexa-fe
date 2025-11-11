@@ -1,16 +1,16 @@
-'use client'
+"use client";
 
-import { Header } from "@/components"
+import { LandingHeader } from "@/components/layout/headers";
 
 export default function AuthLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode
+    children: React.ReactNode;
 }) {
-  return (
-    <>
-      <Header variant="landing" />
-      {children}
-    </>
-  )
+    return (
+        <>
+            <LandingHeader />
+            {children}
+        </>
+    );
 }

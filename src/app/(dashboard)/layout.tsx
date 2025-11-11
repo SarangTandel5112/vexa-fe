@@ -1,16 +1,16 @@
-'use client'
+"use client";
 
-import { Header } from "@/components"
+import { DashboardHeader } from "@/components/layout/headers";
 
 export default function DashboardLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode
+    children: React.ReactNode;
 }) {
-  return (
-    <>
-      <Header variant="dashboard" />
-      {children}
-    </>
-  )
+    return (
+        <>
+            <DashboardHeader />
+            {children}
+        </>
+    );
 }

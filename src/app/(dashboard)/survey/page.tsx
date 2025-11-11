@@ -1,136 +1,68 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CenteredContent, Stepper, Button, Step } from "@/components";
-import { ArrowLeftIcon, ArrowRightIcon } from "@/components/icons";
-import Link from "next/link";
-import NextArrow from "@/components/icons/NextArrow";
-
-const steps: Step[] = [
-    {
-        id: 1,
-        label: "AI Guided Q & A",
-        description:
-            "We will ask concise, targeted questions to learn your goals and context. This helps the agent tailor its responses to your use case.",
-    },
-    {
-        id: 2,
-        label: "Approx. 1 hr",
-        description:
-            "Add documents, links, and notes. The agent securely indexes them to ground answers with your domain knowledge.",
-    },
-    {
-        id: 3,
-        label: "100% Confidential",
-        description:
-            "Preview a clean summary of findings and next steps. Tweak inputs and re-run if needed before you begin the full session.",
-    },
-];
+import { Button } from "@/components";
+import { ArrowRightIcon } from "@/components/icons";
 
 export default function SurveyPage() {
-    const [active, setActive] = useState(0);
     const router = useRouter();
 
-    const handleNext = () => {
-        if (active < steps.length - 1) {
-            setActive(active + 1);
-        }
+    const handleStartDemo = () => {
+        router.push("/chat");
     };
 
-    const handlePrevious = () => {
-        if (active > 0) {
-            setActive(active - 1);
-        }
-    };
-
-    const handleStart = () => {
+    const handleSkip = () => {
         router.push("/chat");
     };
 
     return (
-        <>
-            <section className="px-4 md:px-8 lg:px-[120px]">
-                <CenteredContent className="py-10">
-                    <h1 className="font-bricolage text-[28px] md:text-[40px] font-bold text-[#401A4D] leading-[1]">
-                        AI Research Agent
+        <div className="flex flex-col justify-between items-center min-h-screen px-4 sm:px-8 py-8 pb-36 sm:pb-36">
+            <div className="flex flex-col items-center gap-14 sm:gap-[3.3125rem] w-full">
+                {/* Header Section */}
+                <div className="flex flex-col items-center text-center gap-5 sm:gap-2.5 px-4 max-w-[90rem] pt-0 sm:pt-[2.8125rem]">
+                    <h1 className="font-bricolage text-[2rem] sm:text-[2.5rem] font-semibold leading-[1] sm:leading-[2.5rem] text-[#1e1e1e]">
+                        Want to give Vexa a Quick try?
                     </h1>
-                    <p className="font-bricolage text-[18px] md:text-[26px] text-[#401A4D] mt-2">
-                        Here&apos;s a quick preview of what will happen in your
-                        session
+                    <p className="font-sf-pro text-base sm:text-xl font-normal leading-[1.6] sm:leading-[2.5rem] text-[#1e1e1e] max-w-[50rem]">
+                        Think of it as a practice round — just 5 minutes,
+                        totally optional. Get a feel for how the chat works
+                        before we dive into the real session.
                     </p>
-                </CenteredContent>
-            </section>
+                </div>
 
-            <section className="px-4 md:px-8 lg:px-[120px]">
-                <Stepper
-                    steps={steps}
-                    currentStep={active}
-                    onStepChange={setActive}
-                />
-            </section>
-
-            <section className="px-4 md:px-8 lg:px-[120px]">
-                <CenteredContent className="py-10">
-                    <h4 className="font-bricolage text-[24px] md:text-[30px] font-bold text-[#612A74] tracking-[-0.03em]">
-                        Want a Quick Demo?
-                    </h4>
-                    <p className="font-sf-pro text-[16px] md:text-[20px] text-[#776F69] leading-8 mt-2">
-                        Not sure what to expect? Try a short 5-min demo before
-                        we begin.
-                    </p>
-                    <Link href="/survey">
-                        <Button
-                            variant="secondary"
-                            className="mt-4"
-                            icon={<ArrowRightIcon stroke="#612A74" />}
-                        >
-                            Get a demo
-                        </Button>
-                    </Link>
-                </CenteredContent>
-            </section>
-
-            <section className="px-4 md:px-8 lg:px-[120px] pb-16">
-                <CenteredContent>
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-                        {/* Previous Button - only show if not on first step */}
-                        {active > 0 && (
-                            <Button
-                                variant="secondary"
-                                onClick={handlePrevious}
-                                className="w-full md:w-auto px-8 py-3"
-                                icon={<ArrowLeftIcon stroke="#612A74" />}
-                            >
-                                Previous
-                            </Button>
-                        )}
-
-                        {/* Next Button - show on first two steps */}
-                        {active < steps.length - 1 ? (
-                            <Button
-                                variant="gradient"
-                                size="sm"
-                                onClick={handleNext}
-                                className="w-full md:w-auto text-[18px] md:text-[24px] px-12 py-3 rounded-full"
-                                icon={<NextArrow />}
-                            >
-                                Next
-                            </Button>
-                        ) : (
-                            /* Start Button - show on last step */
-                            <Button
-                                variant="gradient"
-                                size="sm"
-                                onClick={handleStart}
-                                className="w-full md:w-auto text-[18px] md:text-[24px] px-12 py-3 rounded-full"
-                            >
-                                Start Survey
-                            </Button>
-                        )}
+                {/* Visual Section */}
+                <div className="flex flex-col items-center gap-14">
+                    {/* Orb Container */}
+                    <div className="flex items-center justify-center p-1.5 rounded-full shadow-[0_0_10px_0_rgba(222,115,122,0.5)]">
+                        <img
+                            src="https://api.builder.io/api/v1/image/assets/TEMP/52290337a21828f23fc4fe5ab811d59a3ccc3f26?width=596"
+                            alt="Vexa Demo Orb"
+                            className="block w-full max-w-[18.5rem] sm:max-w-[23.5rem] lg:max-w-[37.25rem] h-auto"
+                        />
                     </div>
-                </CenteredContent>
-            </section>
-        </>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-col items-center gap-3.5 w-full max-w-[26.375rem]">
+                        <button
+                            onClick={handleSkip}
+                            className="flex items-center justify-center gap-2 px-6 py-4 border-0 bg-transparent cursor-pointer transition-opacity hover:opacity-80 rounded-[211px_211px_183px_211px]"
+                        >
+                            <ArrowRightIcon stroke="#E15A3A" />
+                            <span className="font-sf-pro text-base font-bold leading-5 text-[#e15a3a]">
+                                Skip
+                            </span>
+                        </button>
+
+                        <Button
+                            variant="primary"
+                            onClick={handleStartDemo}
+                            className="font-[Arial,_-apple-system,_Roboto,_Helvetica,_sans-serif] text-lg font-bold capitalize py-2 px-6 rounded-full w-[13.5rem]"
+                        >
+                            Start Demo
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }

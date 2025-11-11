@@ -1,54 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import { InputField, FormIcons, Button } from "@/components";
 import { LoginRequest } from "../types";
+import { useLoginForm } from "@/hooks";
 
 interface LoginFormProps {
     onSubmit?: (data: LoginRequest) => Promise<void>;
+    redirectTo?: string;
 }
 
-export function LoginForm({ onSubmit }: LoginFormProps) {
-    const router = useRouter();
-    const [isLoggingIn, setIsLoggingIn] = useState(false);
-    const [formData, setFormData] = useState<LoginRequest>({
-        username: "",
-        password: "",
+export function LoginForm({ onSubmit, redirectTo }: LoginFormProps) {
+    const {
+        values,
+        errors,
+        isSubmitting,
+        handleChange,
+        handleSubmit,
+    } = useLoginForm({
+        onSubmit,
+        redirectTo,
     });
-
-    const handleInputChange =
-        (field: keyof LoginRequest) =>
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            setFormData((prev) => ({
-                ...prev,
-                [field]: e.target.value,
-            }));
-        };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (onSubmit) {
-            setIsLoggingIn(true);
-            try {
-                await onSubmit(formData);
-            } catch (error) {
-                console.error("Login error:", error);
-            } finally {
-                setIsLoggingIn(false);
-            }
-        } else {
-            // Mock login - just show UI
-            setIsLoggingIn(true);
-            setTimeout(() => {
-                setIsLoggingIn(false);
-                toast.success("Login successful! Redirecting...");
-                router.push("/");
-            }, 1000);
-        }
-    };
 
     return (
         <div className="col-span-12 lg:col-span-5 space-y-10">
@@ -64,21 +35,31 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
                 <InputField
                     type="text"
                     placeholder="User Id"
-                    value={formData.username}
-                    onChange={handleInputChange("username")}
+                    name="username"
+                    value={values.username as string}
+                    onChange={handleChange}
                     icon={<FormIcons.Email />}
-                    disabled={isLoggingIn}
+                    disabled={isSubmitting}
                 />
 
                 <InputField
                     type="password"
                     placeholder="Password"
-                    value={formData.password}
-                    onChange={handleInputChange("password")}
+                    name="password"
+                    value={values.password as string}
+                    onChange={handleChange}
                     icon={<FormIcons.Password />}
                     showPasswordToggle={true}
-                    disabled={isLoggingIn}
+                    disabled={isSubmitting}
                 />
+
+                {errors.length > 0 && (
+                    <div className="text-sm text-red-600">
+                        {errors.map((error, index) => (
+                            <div key={index}>{error}</div>
+                        ))}
+                    </div>
+                )}
 
                 <div className="text-right">
                     <button
@@ -94,13 +75,13 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
                     variant="primary"
                     className="w-full py-[18px] rounded-full"
                     disabled={
-                        isLoggingIn ||
-                        !formData.username.trim() ||
-                        !formData.password.trim()
+                        isSubmitting ||
+                        !values.username ||
+                        !values.password
                     }
-                    loading={isLoggingIn}
+                    loading={isSubmitting}
                 >
-                    {isLoggingIn ? "Signing in..." : "Login"}
+                    {isSubmitting ? "Signing in..." : "Login"}
                 </Button>
 
                 <p className="text-center font-sf-pro text-sm text-[#776F69]">

@@ -1,6 +1,5 @@
 "use client";
 
-import { Header } from "@/components/layout/Header";
 import { ChatParticipants, ChatControls } from "@/modules/chat/components";
 import { defaultModerator, defaultUser } from "@/modules/chat/data";
 
@@ -26,9 +25,7 @@ export default function ChatPage() {
     };
 
     return (
-        <div className="h-screen bg-background flex flex-col">
-            <Header variant="dashboard" />
-
+        <div className="h-[calc(100vh-64px)] bg-background flex flex-col">
             <div className="w-full flex-1 px-4 py-3 md:py-6 border-b border-[#FAFAF9] bg-[#FAFAF9] overflow-hidden flex flex-col">
                 <div className="flex-1 flex flex-col items-center justify-center px-2 py-2 md:px-8 md:py-12 min-h-0">
                     <div className="w-full max-w-[1440px] h-full flex flex-col gap-4 md:gap-10">
