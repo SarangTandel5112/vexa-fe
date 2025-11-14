@@ -25,22 +25,20 @@ export default function ChatPage() {
     };
 
     return (
-        <div className="h-[calc(100vh-140px)] flex flex-col items-center justify-center px-4 py-6 md:py-8">
-            <div className="w-full max-w-[1440px] h-full flex flex-col gap-4 md:gap-10">
-                <div className="flex-1 flex items-center min-h-0 overflow-hidden">
-                    <ChatParticipants
-                        participants={[defaultModerator, defaultUser]}
-                    />
-                </div>
+        <div className="flex flex-col gap-[10px] md:gap-8 h-[calc(100vh-120px)]">
+            <div className="flex-1 min-h-0 overflow-hidden">
+                <ChatParticipants
+                    participants={[defaultModerator, defaultUser]}
+                />
+            </div>
 
-                <div className="flex-shrink-0 pb-2 md:pb-0">
-                    <ChatControls
-                        onMicrophoneToggle={handleMicrophoneToggle}
-                        onVideoToggle={handleVideoToggle}
-                        onPause={handlePause}
-                        onStartConversation={handleStartConversation}
-                    />
-                </div>
+            <div className="flex-shrink-0">
+                <ChatControls
+                    onMicrophoneToggle={handleMicrophoneToggle}
+                    onVideoToggle={handleVideoToggle}
+                    onPause={handlePause}
+                    onStartConversation={handleStartConversation}
+                />
             </div>
         </div>
     );

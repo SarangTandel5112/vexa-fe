@@ -28,7 +28,10 @@ interface LoginFormFormikProps {
     redirectTo?: string;
 }
 
-export function LoginFormFormik({ onSubmit, redirectTo }: LoginFormFormikProps) {
+export function LoginFormFormik({
+    onSubmit,
+    redirectTo,
+}: LoginFormFormikProps) {
     const formik = useLoginFormFormik({
         onSubmit,
         redirectTo,
@@ -37,7 +40,7 @@ export function LoginFormFormik({ onSubmit, redirectTo }: LoginFormFormikProps) 
     return (
         <div className="col-span-12 lg:col-span-5 space-y-10">
             <div className="space-y-4">
-                <h2 className="font-bricolage text-[32px] md:text-[40px] font-bold text-[#0A0A0A] leading-[1.2] tracking-[-0.04em]">
+                <h2 className="text-heading1 font-bricolage text-[#0A0A0A]">
                     Login to your
                     <br />
                     account

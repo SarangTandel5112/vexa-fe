@@ -3,7 +3,7 @@
 export function ContactHero() {
     return (
         <div>
-            <h1 className="font-bricolage text-[32px] md:text-[40px] font-bold text-[#401A4D] leading-[1.2] tracking-[-0.04em]">
+            <h1 className="text-heading1 font-bricolage text-[#401A4D]">
                 Contact us
             </h1>
         </div>

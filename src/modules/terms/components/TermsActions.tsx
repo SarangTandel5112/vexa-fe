@@ -8,13 +8,13 @@ interface TermsActionsProps {
 
 export function TermsActions({ onBackToLogin }: TermsActionsProps) {
     return (
-        <div className="w-full max-w-4xl">
+        <div className="w-full max-w-3xl">
             <div className="flex justify-center">
                 <Button
                     variant="primary"
-                    size="lg"
+                    size="md"
                     onClick={onBackToLogin}
-                    className="px-12 py-4 text-xl font-bold font-sans rounded-full"
+                    className="px-8 text-base font-bold font-sans rounded-full"
                 >
                     Back to Login
                 </Button>

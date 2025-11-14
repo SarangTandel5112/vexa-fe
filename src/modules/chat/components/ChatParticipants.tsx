@@ -24,7 +24,7 @@ function ParticipantCard({
 
     return (
         <div
-            className={`flex flex-col items-center justify-center gap-4 md:gap-16 lg:gap-[101px] h-full w-full px-4 py-4 md:px-8 md:py-12 lg:px-[30px] lg:py-[60px] rounded-[36px] ${cardStyles}`}
+            className={`relative flex flex-col items-center justify-center h-full w-full px-4 py-3 md:px-8 md:py-6 lg:px-[30px] lg:py-8 rounded-[36px] ${cardStyles}`}
         >
             {isModerator ? (
                 <>
@@ -34,12 +34,12 @@ function ParticipantCard({
                             alt={`${participant.name} avatar`}
                             width={140}
                             height={140}
-                            className="w-[80px] h-[80px] md:w-[140px] md:h-[140px] rounded-full object-cover flex-shrink-0"
+                            className="w-[100px] h-[100px] lg:w-[120px] lg:h-[120px] rounded-full object-cover flex-shrink-0"
                             unoptimized
                         />
                     ) : (
-                        <div className="w-[80px] h-[80px] md:w-[140px] md:h-[140px] rounded-full bg-gray-200 flex items-center justify-center">
-                            <span className="font-bricolage text-2xl md:text-4xl font-semibold text-gray-600">
+                        <div className="w-[100px] h-[100px] lg:w-[120px] lg:h-[120px] rounded-full bg-gray-200 flex items-center justify-center">
+                            <span className="font-bricolage text-3xl lg:text-4xl font-semibold text-gray-600">
                                 {participant.initial ||
                                     participant.name.charAt(0)}
                             </span>
@@ -47,16 +47,16 @@ function ParticipantCard({
                     )}
                 </>
             ) : (
-                <div className="flex items-center justify-center p-3 md:p-6 rounded-full bg-[rgba(255,146,142,0.38)]">
-                    <div className="flex items-center justify-center w-[70px] h-[70px] md:w-[120px] md:h-[120px] p-3 md:p-5 rounded-full bg-[#E9733C]">
-                        <span className="font-bricolage text-[40px] md:text-[80px] font-semibold leading-[40px] md:leading-[80px] text-white">
+                <div className="flex items-center justify-center p-4 lg:p-5 rounded-full bg-[rgba(255,146,142,0.38)]">
+                    <div className="flex items-center justify-center w-[100px] h-[100px] lg:w-[120px] lg:h-[120px] p-3 lg:p-4 rounded-full bg-[#E9733C]">
+                        <span className="font-bricolage text-[50px] lg:text-[60px] font-semibold leading-[50px] lg:leading-[60px] text-white">
                             {participant.initial ||
                                 participant.name.charAt(0).toLowerCase()}
                         </span>
                     </div>
                 </div>
             )}
-            <div className="font-bricolage text-base md:text-2xl font-bold text-[#1E1E1E] capitalize text-center">
+            <div className="absolute bottom-3 left-4 md:bottom-6 md:left-8 lg:bottom-6 lg:left-[30px] font-bricolage text-base md:text-2xl font-bold text-[#1E1E1E] capitalize">
                 {participant.name} - {participant.role}
             </div>
         </div>
@@ -84,7 +84,7 @@ export function ChatParticipants({ participants }: ChatParticipantsProps) {
     if (total === 2) {
         // 2 users: 50-50 vertically on small, 35-65 horizontally on md+
         return (
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-9 w-full h-full">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-[10px] md:gap-9 w-full h-full">
                 {participants.map((participant, index) => {
                     const isModerator =
                         participant.role?.toLowerCase() === "moderator";
@@ -92,9 +92,15 @@ export function ChatParticipants({ participants }: ChatParticipantsProps) {
                         index === 0
                             ? "w-full md:w-[35%] h-1/2 md:h-full"
                             : "w-full md:w-[65%] h-1/2 md:h-full";
+                    const moderatorClasses = isModerator
+                        ? "max-h-[500px] mx-auto flex items-center justify-center"
+                        : "";
 
                     return (
-                        <div key={index} className={widthClass}>
+                        <div
+                            key={index}
+                            className={`${widthClass} ${moderatorClasses}`}
+                        >
                             <ParticipantCard
                                 participant={participant}
                                 index={index}
@@ -110,8 +116,8 @@ export function ChatParticipants({ participants }: ChatParticipantsProps) {
         return (
             <>
                 {/* Small screens: Top row with 2 users (50-50), Bottom row with moderator (full width) */}
-                <div className="flex flex-col md:hidden w-full h-full gap-6">
-                    <div className="flex flex-row w-full h-1/2 gap-6">
+                <div className="flex flex-col md:hidden w-full h-full gap-[10px]">
+                    <div className="flex flex-row w-full h-1/2 gap-[10px]">
                         {nonModerators.map((participant, index) => {
                             const originalIndex = participants.findIndex(
                                 (p) => p === participant
@@ -128,7 +134,7 @@ export function ChatParticipants({ participants }: ChatParticipantsProps) {
                         })}
                     </div>
                     {moderator && (
-                        <div className="w-full h-1/2">
+                        <div className="w-full h-1/2 max-w-[500px] max-h-[600px] mx-auto flex items-center justify-center">
                             <ParticipantCard
                                 participant={moderator}
                                 index={moderatorIndex}
@@ -143,8 +149,14 @@ export function ChatParticipants({ participants }: ChatParticipantsProps) {
                     {participants.map((participant, index) => {
                         const isModerator =
                             participant.role?.toLowerCase() === "moderator";
+                        const moderatorClasses = isModerator
+                            ? "max-w-[500px] max-h-[600px] flex items-center justify-center"
+                            : "";
                         return (
-                            <div key={index} className="w-[33.33%] h-full">
+                            <div
+                                key={index}
+                                className={`w-[33.33%] h-full ${moderatorClasses}`}
+                            >
                                 <ParticipantCard
                                     participant={participant}
                                     index={index}
@@ -170,14 +182,17 @@ export function ChatParticipants({ participants }: ChatParticipantsProps) {
         const widthStyle = total > 6 ? { width: `${100 / total}%` } : undefined;
 
         return (
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-9 w-full h-full">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-[10px] md:gap-9 w-full h-full">
                 {participants.map((participant, index) => {
                     const isModerator =
                         participant.role?.toLowerCase() === "moderator";
+                    const moderatorClasses = isModerator
+                        ? "max-w-[500px] max-h-[600px] flex items-center justify-center"
+                        : "";
                     return (
                         <div
                             key={index}
-                            className={`w-full ${widthClass} h-full`}
+                            className={`w-full ${widthClass} h-full ${moderatorClasses}`}
                             style={widthStyle}
                         >
                             <ParticipantCard

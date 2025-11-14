@@ -11,22 +11,22 @@ export function Logo({
 }: LogoProps) {
     const textSize =
         size === "sm"
-            ? "text-[20px]"
+            ? "text-[16px]"
             : size === "lg"
-            ? "text-[32px]"
-            : "text-[28px]";
+            ? "text-[24px]"
+            : "text-[20px]";
     const sizeClasses = {
-        sm: "w-8 h-8",
-        md: "w-12 h-12",
-        lg: "w-16 h-16",
+        sm: "w-7 h-7",
+        md: "w-10 h-10",
+        lg: "w-14 h-14",
     };
 
     return (
-        <div className={`flex items-center gap-[14px] ${className}`}>
+        <div className={`flex items-center gap-3 ${className}`}>
             <img src={LOGO_URL} alt="Vexa Logo" className={sizeClasses[size]} />
             {showText && (
                 <span
-                    className={`font-bricolage font-bold leading-8 text-[#612A74] ${textSize}`}
+                    className={`font-bricolage font-bold leading-tight text-[#612A74] ${textSize}`}
                 >
                     Vexa
                 </span>

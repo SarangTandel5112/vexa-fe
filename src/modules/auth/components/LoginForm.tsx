@@ -10,28 +10,23 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onSubmit, redirectTo }: LoginFormProps) {
-    const {
-        values,
-        errors,
-        isSubmitting,
-        handleChange,
-        handleSubmit,
-    } = useLoginForm({
-        onSubmit,
-        redirectTo,
-    });
+    const { values, errors, isSubmitting, handleChange, handleSubmit } =
+        useLoginForm({
+            onSubmit,
+            redirectTo,
+        });
 
     return (
-        <div className="col-span-12 lg:col-span-5 space-y-10">
-            <div className="space-y-4">
-                <h2 className="font-bricolage text-[32px] md:text-[40px] font-bold text-[#0A0A0A] leading-[1.2] tracking-[-0.04em]">
+        <div className="col-span-12 lg:col-span-5 space-y-4 md:space-y-6">
+            <div className="space-y-2 md:space-y-3">
+                <h2 className="text-heading1 font-bricolage text-[#0A0A0A]">
                     Login to your
                     <br />
                     account
                 </h2>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
                 <InputField
                     type="text"
                     placeholder="User Id"
@@ -73,11 +68,10 @@ export function LoginForm({ onSubmit, redirectTo }: LoginFormProps) {
                 <Button
                     type="submit"
                     variant="primary"
-                    className="w-full py-[18px] rounded-full"
+                    className="w-full rounded-full"
+                    size="md"
                     disabled={
-                        isSubmitting ||
-                        !values.username ||
-                        !values.password
+                        isSubmitting || !values.username || !values.password
                     }
                     loading={isSubmitting}
                 >

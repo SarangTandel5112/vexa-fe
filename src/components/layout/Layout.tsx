@@ -38,9 +38,11 @@ export function MainContent({
     className?: string;
 }) {
     return (
-        <div className="w-full px-4 py-6 border-b border-[#FAFAF9] bg-[#FAFAF9]">
-            <main className={`max-w-[1200px] mx-auto px-4 md:px-8`}>
-                <div className={`py-8 lg:py-12 ${className}`}>{children}</div>
+        <div className="w-full py-4 sm:py-6 border-b border-[#FAFAF9] bg-[#FAFAF9] px-4 sm:px-6 md:px-8">
+            <main className={`max-w-[1200px] mx-auto`}>
+                <div className={`py-1 sm:py-4 lg:py-6 ${className}`}>
+                    {children}
+                </div>
             </main>
         </div>
     );

@@ -49,10 +49,10 @@ export function DashboardHeader({ className = "" }: DashboardHeaderProps) {
             <style jsx>{`
                 .need-help-button {
                     display: flex;
-                    padding: 16px 24px;
+                    padding: 10px 20px;
                     justify-content: center;
                     align-items: center;
-                    gap: 8px;
+                    gap: 6px;
                     border-radius: 36px 36px 8px 36px;
                     background: linear-gradient(
                         91deg,
@@ -62,9 +62,9 @@ export function DashboardHeader({ className = "" }: DashboardHeaderProps) {
                     color: #f3eee9;
                     font-family: "SF Pro Rounded", -apple-system, Roboto,
                         Helvetica, sans-serif;
-                    font-size: 16px;
+                    font-size: 14px;
                     font-weight: 700;
-                    line-height: 20px;
+                    line-height: 18px;
                     border: none;
                     cursor: pointer;
                     transition: transform 0.2s ease;

@@ -47,7 +47,7 @@ export function InputField({
     return (
         <div className={`relative ${className}`}>
             <div
-                className={`flex items-center gap-2 px-4 py-4 border border-[#776F69]/28 rounded-2xl bg-white/20 ${
+                className={`flex items-center gap-2 px-3 py-3 border border-[#776F69]/28 rounded-2xl bg-white/20 ${
                     disabled ? "opacity-60 cursor-not-allowed" : ""
                 }`}
             >
@@ -60,7 +60,7 @@ export function InputField({
                     onChange={onChange}
                     onBlur={onBlur}
                     disabled={disabled}
-                    className="flex-1 bg-transparent outline-none font-sf-pro text-base text-[#0A0A0A] placeholder:text-[#776F69] disabled:cursor-not-allowed"
+                    className="flex-1 bg-transparent outline-none font-sf-pro text-sm text-[#0A0A0A] placeholder:text-[#776F69] disabled:cursor-not-allowed"
                 />
                 {type === "password" && showPasswordToggle && !disabled && (
                     <PasswordToggleButton />
@@ -79,14 +79,14 @@ export function TextareaField({
 }: TextareaFieldProps) {
     return (
         <div
-            className={`px-4 py-5 border border-[#776F69]/28 rounded-2xl bg-white/20 ${className}`}
+            className={`px-3 py-3 border border-[#776F69]/28 rounded-2xl bg-white/20 ${className}`}
         >
             <textarea
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
                 rows={rows}
-                className="w-full bg-transparent outline-none font-sf-pro text-base text-[#0A0A0A] placeholder:text-[#776F69] resize-none"
+                className="w-full bg-transparent outline-none font-sf-pro text-sm text-[#0A0A0A] placeholder:text-[#776F69] resize-none"
             />
         </div>
     );
@@ -120,12 +120,12 @@ export function SelectField({
 
     return (
         <div className={`relative ${className}`}>
-            <div className="flex items-center gap-2 px-4 py-4 border border-[#776F69]/28 rounded-2xl bg-white/20">
+            <div className="flex items-center gap-2 px-3 py-3 border border-[#776F69]/28 rounded-2xl bg-white/20">
                 {icon && icon}
                 <select
                     value={value}
                     onChange={onChange}
-                    className="flex-1 bg-transparent outline-none font-sf-pro text-base text-[#0A0A0A] appearance-none cursor-pointer"
+                    className="flex-1 bg-transparent outline-none font-sf-pro text-sm text-[#0A0A0A] appearance-none cursor-pointer"
                 >
                     {placeholder && (
                         <option value="" className="text-[#776F69]">

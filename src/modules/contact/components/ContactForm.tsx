@@ -117,17 +117,17 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
     };
 
     return (
-        <div className="space-y-10">
+        <div className="space-y-6">
             {/* Success Message */}
             {successMessage && (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3">
                     <p className="text-green-800 text-sm">{successMessage}</p>
                 </div>
             )}
 
             {/* Error Messages */}
             {errors.length > 0 && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
                     <ul className="text-red-800 text-sm space-y-1">
                         {errors.map((error, index) => (
                             <li key={index}>• {error}</li>
@@ -137,7 +137,7 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
             )}
 
             {/* Contact Form */}
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <InputField
                     type="text"
                     placeholder="Enter your Company Name"
@@ -180,9 +180,10 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
                 <Button
                     type="submit"
                     variant="primary"
+                    size="md"
                     loading={isSubmitting}
                     disabled={isSubmitting}
-                    className="w-full py-[18px] rounded-full"
+                    className="w-full rounded-full"
                 >
                     {isSubmitting ? "Submitting..." : "Submit"}
                 </Button>

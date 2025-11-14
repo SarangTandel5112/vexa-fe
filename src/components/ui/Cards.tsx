@@ -17,17 +17,17 @@ export function FeatureCard({
 }: FeatureCardProps) {
     return (
         <div
-            className={`p-6 rounded-[36px] border border-[#D0CAC5] backdrop-blur-[15px]  space-y-5 ${className}`}
+            className={`p-4 rounded-3xl border border-[#D0CAC5] backdrop-blur-[15px] space-y-3 ${className}`}
         >
             <div className="flex justify-center">
-                <div className="w-[60px] h-[58px] rounded-full border border-[#776F69]/28 bg-[#E95D3C] flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full border border-[#776F69]/28 bg-[#E95D3C] flex items-center justify-center">
                     {icon}
                 </div>
             </div>
-            <h3 className="font-bricolage text-[22px] font-bold text-[#0A0A0A] text-center leading-[1.45] tracking-[-0.04em]">
+            <h3 className="text-heading3 font-bricolage text-[#0A0A0A] text-center">
                 {title}
             </h3>
-            <p className="font-sf-pro text-[20px] font-normal text-[#776F69] text-center leading-[1.5]">
+            <p className="text-body2 font-sf-pro text-[#776F69] text-center">
                 {description}
             </p>
         </div>
@@ -45,16 +45,16 @@ export function DashboardCard({
 }: DashboardCardProps) {
     return (
         <article
-            className={`rounded-[36px] border border-[#D0CAC5] bg-white/50 backdrop-blur-[15px] p-6 flex flex-col gap-6 ${className}`}
+            className={`rounded-3xl border border-[#D0CAC5] bg-white/50 backdrop-blur-[15px] p-4 flex flex-col gap-4 ${className}`}
         >
             {/* Header row */}
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-3">
                 <img
                     src={avatar}
                     alt="Agent avatar"
-                    className="w-16 h-16 rounded-full border border-[#776F69]/30"
+                    className="w-12 h-12 rounded-full border border-[#776F69]/30"
                 />
-                <h4 className="font-bricolage text-[24px] font-bold text-[#0A0A0A] tracking-[-0.04em]">
+                <h4 className="text-heading3 font-bricolage text-[#0A0A0A]">
                     {title}
                 </h4>
             </div>
@@ -64,29 +64,29 @@ export function DashboardCard({
             {/* Languages */}
             <div className="flex items-center gap-2 text-[#776F69] font-sf-pro">
                 <LanguageIcon />
-                <span className="text-[16px]">{languages.join(", ")}</span>
+                <span className="text-[14px]">{languages.join(", ")}</span>
             </div>
 
             {/* Description */}
-            <p className="font-sf-pro text-[16px] leading-[1.5] text-[#776F69] line-clamp-6">
+            <p className="text-body2 font-sf-pro text-[#776F69] line-clamp-4">
                 {description}
             </p>
 
             {/* Footer controls */}
-            <div className="flex items-center gap-3">
-                <Link href={`/survey?id=${id}`}>
+            <div className="flex items-center gap-2">
+                <Link href="/chat">
                     <button
                         onClick={onStartConversation}
-                        className="px-6 py-2.5 rounded-full text-[14px] text-white font-normal bg-gradient-to-r from-[#E8A089] to-[#612A74] flex items-center gap-2 cursor-pointer"
+                        className="px-4 py-2 rounded-full text-[13px] text-white font-normal bg-gradient-to-r from-[#E8A089] to-[#612A74] flex items-center gap-1.5 cursor-pointer"
                     >
                         <CallIcon />
                         Start Conversation
                     </button>
                 </Link>
 
-                <div className="ml-auto flex items-center gap-2 bg-[#F7F4F2] rounded-[12px] min-h-[36px] px-2 shadow-[inset_0_0_0_1px_rgba(103,48,117,0.20),0_1px_2px_rgba(103,48,117,0.05)] cursor-pointer">
+                <div className="ml-auto flex items-center gap-1.5 bg-[#F7F4F2] rounded-lg min-h-[32px] px-1.5 shadow-[inset_0_0_0_1px_rgba(103,48,117,0.20),0_1px_2px_rgba(103,48,117,0.05)] cursor-pointer">
                     {/* US flag */}
-                    <div className="w-6 h-6 rounded-[12px] border border-[#E1E1E1] overflow-hidden grid place-items-center">
+                    <div className="w-5 h-5 rounded-lg border border-[#E1E1E1] overflow-hidden grid place-items-center">
                         <USFlagIcon />
                     </div>
                     <DropdownIcon />

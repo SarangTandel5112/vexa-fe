@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { MainContent, Container } from "@/components";
+import { Container } from "@/components";
 import {
     TermsHero,
     TermsContent,
@@ -16,15 +16,13 @@ export default function TermsPage() {
     };
 
     return (
-        <MainContent>
-            <Container
-                size="xl"
-                className="flex flex-col items-center gap-6 md:gap-8"
-            >
-                <TermsHero />
-                <TermsContent />
-                <TermsActions onBackToLogin={handleBackToLogin} />
-            </Container>
-        </MainContent>
+        <Container
+            size="lg"
+            className="flex flex-col items-center gap-4 md:gap-6"
+        >
+            <TermsHero />
+            <TermsContent />
+            <TermsActions onBackToLogin={handleBackToLogin} />
+        </Container>
     );
 }
