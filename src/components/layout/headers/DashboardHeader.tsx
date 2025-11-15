@@ -25,7 +25,7 @@ export function DashboardHeader({ className = "" }: DashboardHeaderProps) {
                 {/* Right: Buttons */}
                 <div className="flex items-center gap-6">
                     <Link href="/contact">
-                        <button className="need-help-button">
+                        <button className="flex items-center justify-center gap-1.5 px-3 py-3 md:px-5 md:py-2.5 rounded-[36px_36px_8px_36px] bg-gradient-to-r from-[#E95D3C] to-[#833422] text-[#F3EEE9] font-sf-pro text-sm font-bold leading-[18px] border-none cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0">
                             <ContactIcon
                                 stroke="#F3EEE9"
                                 className="w-4 h-4 md:w-6 md:h-6"
@@ -35,41 +35,6 @@ export function DashboardHeader({ className = "" }: DashboardHeaderProps) {
                     </Link>
                 </div>
             </div>
-            <style jsx>{`
-                .need-help-button {
-                    display: flex;
-                    padding: 12px 12px;
-                    justify-content: center;
-                    align-items: center;
-                    gap: 6px;
-                    border-radius: 36px 36px 8px 36px;
-                    background: linear-gradient(
-                        91deg,
-                        #e95d3c 49.74%,
-                        #833422 88.73%
-                    );
-                    color: #f3eee9;
-                    font-family: "SF Pro Rounded", -apple-system, Roboto,
-                        Helvetica, sans-serif;
-                    font-size: 14px;
-                    font-weight: 700;
-                    line-height: 18px;
-                    border: none;
-                    cursor: pointer;
-                    transition: transform 0.2s ease;
-                }
-                .need-help-button:hover {
-                    transform: translateY(-1px);
-                }
-                .need-help-button:active {
-                    transform: translateY(0);
-                }
-                @media (min-width: 768px) {
-                    .need-help-button {
-                        padding: 10px 20px;
-                    }
-                }
-            `}</style>
         </BaseHeader>
     );
 }

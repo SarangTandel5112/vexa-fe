@@ -42,8 +42,11 @@ export async function createDirectUpload(): Promise<MuxUploadResponse> {
             uploadId: upload.id,
         };
     } catch (error) {
-        console.error("Error creating Mux direct upload:", error);
-        throw new Error("Failed to create upload URL");
+        throw new Error(
+            `Failed to create upload URL: ${
+                error instanceof Error ? error.message : "Unknown error"
+            }`
+        );
     }
 }
 
@@ -60,7 +63,6 @@ export async function getUploadStatus(
             status: upload.status || "unknown",
         };
     } catch (error) {
-        console.error("Error retrieving upload status:", error);
         return {
             assetId: null,
             status: "error",
@@ -76,7 +78,6 @@ export async function getAsset(assetId: string): Promise<MuxAsset | null> {
         const asset = await mux.video.assets.retrieve(assetId);
         return asset as MuxAsset;
     } catch (error) {
-        console.error("Error retrieving Mux asset:", error);
         return null;
     }
 }
@@ -100,7 +101,6 @@ export async function getPlaybackUrl(assetId: string): Promise<string | null> {
 
         return null;
     } catch (error) {
-        console.error("Error getting playback URL:", error);
         return null;
     }
 }
@@ -113,7 +113,6 @@ export async function deleteAsset(assetId: string): Promise<boolean> {
         await mux.video.assets.delete(assetId);
         return true;
     } catch (error) {
-        console.error("Error deleting Mux asset:", error);
         return false;
     }
 }

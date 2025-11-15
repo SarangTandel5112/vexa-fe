@@ -6,22 +6,22 @@ import { defaultModerator, defaultUser } from "@/modules/chat/data";
 export default function ChatPage() {
     const handleMicrophoneToggle = () => {
         // Handle microphone toggle
-        console.log("Microphone toggled");
+[]        // TODO: Implement microphone toggle logic
     };
 
     const handleVideoToggle = () => {
         // Handle video toggle
-        console.log("Video toggled");
+        // TODO: Implement video toggle logic
     };
 
     const handlePause = () => {
         // Handle pause
-        console.log("Paused");
+        // TODO: Implement pause logic
     };
 
     const handleStartConversation = () => {
         // Handle start conversation
-        console.log("Start conversation");
+        // TODO: Implement conversation start logic
     };
 
     return (

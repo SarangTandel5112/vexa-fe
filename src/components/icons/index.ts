@@ -17,22 +17,13 @@ export { ChevronDownIcon } from "./ChevronDownIcon";
 export { ChevronLeftIcon } from "./ChevronLeftIcon";
 export { ChevronRightIcon } from "./ChevronRightIcon";
 
-// Legacy exports (keep for backward compatibility)
-export { default as NextIcon } from "./NextIcon";
-export { default as NextArrow } from "./NextArrow";
-export { default as CallIcon } from "./CallIcon";
-export { default as LanguageIcon } from "./LanguageIcon";
-export { default as DropdownIcon } from "./DropdownIcon";
-export { default as USFlagIcon } from "./USFlagIcon";
-export { default as PersonalizedConversationsIcon } from "./PersonalizedConversationsIcon";
-export { default as SmartModerationIcon } from "./SmartModerationIcon";
-export { default as ActionableInsightsIcon } from "./ActionableInsightsIcon";
+// Feature icons
+export { PersonalizedConversationsIcon } from "./PersonalizedConversationsIcon";
+export { SmartModerationIcon } from "./SmartModerationIcon";
+export { ActionableInsightsIcon } from "./ActionableInsightsIcon";
+
+// Chat icons
 export { MicrophoneIcon } from "./MicrophoneIcon";
 export { VideoIcon } from "./VideoIcon";
 export { PauseIcon } from "./PauseIcon";
 export { PhoneIcon } from "./PhoneIcon";
-// Legacy default exports (for backward compatibility)
-export { default as MicrophoneIconDefault } from "./MicrophoneIcon";
-export { default as VideoIconDefault } from "./VideoIcon";
-export { default as PauseIconDefault } from "./PauseIcon";
-export { default as PhoneIconDefault } from "./PhoneIcon";

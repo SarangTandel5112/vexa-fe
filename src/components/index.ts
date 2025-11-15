@@ -9,7 +9,6 @@ export { ConversationControls } from "./ui/ConversationControls";
 export { Modal } from "./ui/Modal";
 export { EndConversationModal } from "./ui/EndConversationModal";
 export { ThankYouModal } from "./ui/ThankYouModal";
-export { VideoRecorder } from "./VideoRecorder";
 
 // Form Components
 export {

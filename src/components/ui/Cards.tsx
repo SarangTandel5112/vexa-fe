@@ -1,13 +1,11 @@
 import React from "react";
 import { FeatureCardProps, DashboardCardProps } from "@/components/types";
 import Link from "next/link";
-import LanguageIcon from "../icons/LanguageIcon";
-import CallIcon from "../icons/CallIcon";
-import USFlagIcon from "../icons/USFlagIcon";
-import DropdownIcon from "../icons/DropdownIcon";
-import PersonalizedConversationsIcon from "../icons/PersonalizedConversationsIcon";
-import SmartModerationIcon from "../icons/SmartModerationIcon";
-import ActionableInsightsIcon from "../icons/ActionableInsightsIcon";
+import {
+    PersonalizedConversationsIcon,
+    SmartModerationIcon,
+    ActionableInsightsIcon,
+} from "../icons";
 
 export function FeatureCard({
     icon,
@@ -63,8 +61,7 @@ export function DashboardCard({
 
             {/* Languages */}
             <div className="flex items-center gap-2 text-[#776F69] font-sf-pro">
-                <LanguageIcon />
-                <span className="text-[14px]">{languages.join(", ")}</span>
+                <span className="text-[14px]">🌐 {languages.join(", ")}</span>
             </div>
 
             {/* Description */}
@@ -79,17 +76,13 @@ export function DashboardCard({
                         onClick={onStartConversation}
                         className="px-4 py-2 rounded-full text-[13px] text-white font-normal bg-gradient-to-r from-[#E8A089] to-[#612A74] flex items-center gap-1.5 cursor-pointer"
                     >
-                        <CallIcon />
-                        Start Conversation
+                        📞 Start Conversation
                     </button>
                 </Link>
 
-                <div className="ml-auto flex items-center gap-1.5 bg-[#F7F4F2] rounded-lg min-h-[32px] px-1.5 shadow-[inset_0_0_0_1px_rgba(103,48,117,0.20),0_1px_2px_rgba(103,48,117,0.05)] cursor-pointer">
-                    {/* US flag */}
-                    <div className="w-5 h-5 rounded-lg border border-[#E1E1E1] overflow-hidden grid place-items-center">
-                        <USFlagIcon />
-                    </div>
-                    <DropdownIcon />
+                <div className="ml-auto flex items-center gap-1.5 bg-[#F7F4F2] rounded-lg min-h-[32px] px-2 py-1 shadow-[inset_0_0_0_1px_rgba(103,48,117,0.20),0_1px_2px_rgba(103,48,117,0.05)] cursor-pointer">
+                    <span className="text-sm">🇺🇸</span>
+                    <span className="text-xs">▼</span>
                 </div>
             </div>
         </article>

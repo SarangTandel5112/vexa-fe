@@ -7,80 +7,7 @@ import {
     ChevronLeftIcon,
     ChevronRightIcon,
 } from "@/components/icons";
-
-interface UserData {
-    id: string;
-    name: string;
-    projects: number;
-    agentUsed: string;
-    plan: string;
-}
-
-const userData: UserData[] = [
-    {
-        id: "BG6767",
-        name: "User Name 1",
-        projects: 1,
-        agentUsed: "1",
-        plan: "Free Trial",
-    },
-    {
-        id: "BG6767",
-        name: "User Name 1",
-        projects: 1,
-        agentUsed: "AI Moderator",
-        plan: "Free Trial",
-    },
-    {
-        id: "BG6767",
-        name: "User Name 1",
-        projects: 25,
-        agentUsed: "AI Moderator",
-        plan: "Free Trial",
-    },
-    {
-        id: "BG6767",
-        name: "User Name 1",
-        projects: 25,
-        agentUsed: "AI Moderator",
-        plan: "Free Trial",
-    },
-    {
-        id: "BG6767",
-        name: "User Name 1",
-        projects: 25,
-        agentUsed: "AI Moderator",
-        plan: "Free Trial",
-    },
-    {
-        id: "BG6767",
-        name: "User Name 1",
-        projects: 25,
-        agentUsed: "AI Moderator",
-        plan: "Free Trial",
-    },
-    {
-        id: "BG6767",
-        name: "User Name 1",
-        projects: 25,
-        agentUsed: "AI Moderator",
-        plan: "Free Trial",
-    },
-    {
-        id: "BG6767",
-        name: "User Name 1",
-        projects: 25,
-        agentUsed: "AI Moderator",
-        plan: "Free Trial",
-    },
-    {
-        id: "BG6767",
-        name: "User Name 1",
-        projects: 25,
-        agentUsed: "AI Moderator",
-        plan: "Free Trial",
-    },
-];
+import { mockUsers, type UserData } from "@/modules/admin/data";
 
 export default function UserPage() {
     return (
@@ -160,11 +87,11 @@ export default function UserPage() {
                         </div>
 
                         {/* Table Rows */}
-                        {userData.map((user, index) => (
+                        {mockUsers.map((user, index) => (
                             <div
                                 key={index}
                                 className={`grid grid-cols-5 gap-4 p-6 border-x border-b border-[#DBDADE] ${
-                                    index === userData.length - 1
+                                    index === mockUsers.length - 1
                                         ? "rounded-b-3xl"
                                         : ""
                                 }`}
