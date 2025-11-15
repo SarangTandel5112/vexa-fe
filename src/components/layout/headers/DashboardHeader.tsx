@@ -6,7 +6,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { Logo } from "@/components/icons";
+import { Logo, ContactIcon } from "@/components/icons";
 import { BaseHeader } from "./BaseHeader";
 
 interface DashboardHeaderProps {
@@ -26,21 +26,10 @@ export function DashboardHeader({ className = "" }: DashboardHeaderProps) {
                 <div className="flex items-center gap-6">
                     <Link href="/contact">
                         <button className="need-help-button">
-                            <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
-                                    stroke="#F3EEE9"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            </svg>
+                            <ContactIcon
+                                stroke="#F3EEE9"
+                                className="w-4 h-4 md:w-6 md:h-6"
+                            />
                             <span>Need Help</span>
                         </button>
                     </Link>
@@ -49,7 +38,7 @@ export function DashboardHeader({ className = "" }: DashboardHeaderProps) {
             <style jsx>{`
                 .need-help-button {
                     display: flex;
-                    padding: 10px 20px;
+                    padding: 12px 12px;
                     justify-content: center;
                     align-items: center;
                     gap: 6px;
@@ -74,6 +63,11 @@ export function DashboardHeader({ className = "" }: DashboardHeaderProps) {
                 }
                 .need-help-button:active {
                     transform: translateY(0);
+                }
+                @media (min-width: 768px) {
+                    .need-help-button {
+                        padding: 10px 20px;
+                    }
                 }
             `}</style>
         </BaseHeader>
