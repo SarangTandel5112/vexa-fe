@@ -17,7 +17,15 @@ const config: Config = {
             },
             fontFamily: {
                 "space-grotesk": "var(--body-font)",
-                // abacaxi: ["abacaxi-latin-variable", "sans-serif"]
+                roboto: "var(--font-roboto)",
+                bricolage: "var(--font-bricolage)",
+                "sf-pro": [
+                    "SF Pro Rounded",
+                    "-apple-system",
+                    "Roboto",
+                    "Helvetica",
+                    "sans-serif",
+                ],
             },
         },
     },

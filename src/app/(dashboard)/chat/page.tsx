@@ -6,7 +6,7 @@ import { defaultModerator, defaultUser } from "@/modules/chat/data";
 export default function ChatPage() {
     const handleMicrophoneToggle = () => {
         // Handle microphone toggle
-[]        // TODO: Implement microphone toggle logic
+        // TODO: Implement microphone toggle logic
     };
 
     const handleVideoToggle = () => {
